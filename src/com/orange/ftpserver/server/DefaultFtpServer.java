@@ -61,11 +61,6 @@ public class DefaultFtpServer implements FtpServer {
 		if(bossGroup != null)
 			bossGroup.shutdownGracefully();
 	}
-
-	@Override
-	public List<FtpUser> getUsers() {
-		return null;
-	}
 	
 	public void setServerListeners(Map<String, FtpServerListener> serverListenerMap){
 		this.serverListenerMap = serverListenerMap;
