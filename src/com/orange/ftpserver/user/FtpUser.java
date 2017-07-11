@@ -1,5 +1,16 @@
 package com.orange.ftpserver.user;
 
-public interface FtpUser {
+import java.util.List;
 
+import com.orange.ftpserver.author.Authority;
+
+public interface FtpUser {
+	public String getUserName();
+	public String getUserPassword();
+	public String getHomedirectory();
+	public List<Authority> getAuthorities();
+	public long getMaxIdleTime();
+	public long getMaxPerFileSize();
+	public long getMaxUserSize();
+	public boolean isEnable();
 }
