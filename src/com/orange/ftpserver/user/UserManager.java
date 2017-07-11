@@ -1,5 +1,8 @@
 package com.orange.ftpserver.user;
 
-public interface UserManager {
+import java.util.List;
 
+public interface UserManager {
+	public void saveUser(FtpUser user);
+	public List<FtpUser> getUsers();
 }
