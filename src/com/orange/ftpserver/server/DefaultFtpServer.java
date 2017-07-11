@@ -3,23 +3,63 @@ package com.orange.ftpserver.server;
 import java.util.List;
 import java.util.Map;
 
+import com.orange.ftpserver.handler.FtpServerHandler;
 import com.orange.ftpserver.listener.FtpServerListener;
 import com.orange.ftpserver.user.FtpUser;
 import com.orange.ftpserver.user.UserManager;
+
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelOption;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 public class DefaultFtpServer implements FtpServer {
 	
 	private Map<String,FtpServerListener> serverListenerMap;
 	private UserManager userManager;
 	
+	private EventLoopGroup bossGroup;
+	private EventLoopGroup workerGroup;
+	
 	@Override
 	public void start() {
-		
+		EventLoopGroup bossGroup = new NioEventLoopGroup();  
+		EventLoopGroup workerGroup = new NioEventLoopGroup();  
+        try {  
+        	ServerBootstrap serverBootstrap = new ServerBootstrap();  
+        	serverBootstrap.group(bossGroup, workerGroup)
+             .channel(NioServerSocketChannel.class)  
+             .childHandler(new ChannelInitializer<SocketChannel>() {  
+                        @Override  
+                        public void initChannel(SocketChannel ch)  
+                                throws Exception {  
+                            // ×¢²áhandler  
+                            ch.pipeline().addLast(new FtpServerHandler());  
+                        }  
+              })
+              .option(ChannelOption.SO_BACKLOG, 128)  
+              .childOption(ChannelOption.SO_KEEPALIVE, true);  
+  
+            ChannelFuture f = serverBootstrap.bind(13100).sync();  
+            f.channel().closeFuture().sync();  
+        } catch (InterruptedException e) {
+			e.printStackTrace();
+		} finally {
+            workerGroup.shutdownGracefully();  
+            bossGroup.shutdownGracefully();  
+        }
 	}
 
 	@Override
 	public void close() {
-		
+		if(workerGroup != null)
+			workerGroup.shutdownGracefully();
+		if(bossGroup != null)
+			bossGroup.shutdownGracefully();
 	}
 
 	@Override
