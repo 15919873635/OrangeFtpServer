@@ -1,5 +1,11 @@
 package com.orange.ftpserver.factory;
 
-public class DefaultServerFactory {
+import com.orange.ftpserver.server.FtpServer;
 
+public class DefaultServerFactory extends AbstractFtpServerFactory{
+
+	@Override
+	public FtpServer createServer() {
+		return null;
+	}
 }

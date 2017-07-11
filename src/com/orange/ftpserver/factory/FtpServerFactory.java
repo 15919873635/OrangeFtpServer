@@ -1,5 +1,7 @@
 package com.orange.ftpserver.factory;
 
-public interface FtpServerFactory {
+import com.orange.ftpserver.server.FtpServer;
 
+public interface FtpServerFactory {
+	public FtpServer createServer();
 }
