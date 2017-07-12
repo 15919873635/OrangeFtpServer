@@ -2,6 +2,7 @@ package com.orange.ftpserver.server;
 
 import java.util.Map;
 
+import com.orange.ftpserver.codec.FtpRequestDecoder;
 import com.orange.ftpserver.handler.FtpServerHandler;
 import com.orange.ftpserver.listener.FtpServerListener;
 import com.orange.ftpserver.user.UserManager;
@@ -34,8 +35,8 @@ public class DefaultFtpServer implements FtpServer {
              .childHandler(new ChannelInitializer<SocketChannel>() {  
                         @Override  
                         public void initChannel(SocketChannel ch)  
-                                throws Exception {  
-                            // ×¢²áhandler  
+                                throws Exception {
+                        	ch.pipeline().addLast(new FtpRequestDecoder());
                             ch.pipeline().addLast(new FtpServerHandler());  
                         }  
               })
