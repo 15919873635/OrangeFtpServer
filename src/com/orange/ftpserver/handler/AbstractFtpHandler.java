@@ -21,10 +21,10 @@ public abstract class AbstractFtpHandler extends ChannelInboundHandlerAdapter {
 		System.out.println("110");
 	}
 	
+	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception
 	{
 		System.out.println("error");
 		logger.error(cause.getMessage(), cause);
-		ctx.channel().close();
 	}
 }
