@@ -10,6 +10,6 @@ public class FtpResponseEncoder extends MessageToByteEncoder<FtpResponse> {
 
 	@Override
 	protected void encode(ChannelHandlerContext context, FtpResponse ftpResponse, ByteBuf byteBuf) throws Exception {
-		
+		byteBuf.writableBytes();
 	}
 }
