@@ -1,15 +1,22 @@
 package com.orange.ftpserver.context;
 
+import java.util.Date;
+
 public class DefaultFtpResponse implements FtpResponse {
 
 	private int code;
 	
-	public DefaultFtpResponse(){}
+	public DefaultFtpResponse(){
+		this.code = 0;
+	}
 	
 	public DefaultFtpResponse(int code){
-		this.code = code;
+		setCode(code);
 	}
 
+	public void setCode(int code){
+		this.code = code;
+	}
 	@Override
 	public int getCode() {
 		return code;
@@ -22,7 +29,7 @@ public class DefaultFtpResponse implements FtpResponse {
 
 	@Override
 	public long getSentTime() {
-		return 0;
+		return new Date().getTime();
 	}
 
 	@Override

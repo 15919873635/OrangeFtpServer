@@ -1,6 +1,6 @@
 package com.orange.ftpserver.command;
 
-public enum FtpCommand {
+public enum FtpRequestCommand {
 	/** This command tells the server to abort the previous FTP service command and
 	 * any associated transfer of data. No action is to be taken if the previous
 	 * command has been completed (including data transfer). The control connection
@@ -58,14 +58,14 @@ public enum FtpCommand {
 	
 	private String name;
 	
-	private FtpCommand(String name){
+	private FtpRequestCommand(String name){
 		this.name = name;
 	}
 	
-	public static FtpCommand nameOf(String name){
-		FtpCommand commond = FtpCommand.BLANK;
-		FtpCommand[] values = FtpCommand.values();
-		for(FtpCommand val : values){
+	public static FtpRequestCommand nameOf(String name){
+		FtpRequestCommand commond = FtpRequestCommand.BLANK;
+		FtpRequestCommand[] values = FtpRequestCommand.values();
+		for(FtpRequestCommand val : values){
 			if(val.valueOf().equals(name)){
 				commond =  val;break;
 			}

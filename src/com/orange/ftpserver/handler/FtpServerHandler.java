@@ -2,7 +2,7 @@ package com.orange.ftpserver.handler;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.orange.ftpserver.command.FtpCommandDecoder;
+import com.orange.ftpserver.command.FtpRequestCommandDecoder;
 import com.orange.ftpserver.context.FtpResponse;
 
 import io.netty.channel.ChannelHandlerContext;
@@ -13,7 +13,7 @@ public class FtpServerHandler extends AbstractFtpHandler {
     public void channelRead(ChannelHandlerContext ctx, Object msg)  
             throws Exception {
 		if(StringUtils.isNotBlank((String) msg)){
-			FtpCommandDecoder commandDecoder = FtpCommandDecoder.defaultParser();
+			FtpRequestCommandDecoder commandDecoder = FtpRequestCommandDecoder.defaultParser();
 			commandDecoder.excuteCommand(super.session,(String)msg);
 		}
 	}
@@ -24,7 +24,7 @@ public class FtpServerHandler extends AbstractFtpHandler {
 	{
 		FtpResponse ftpResonse = super.session.getResponse();
 		if(ftpResonse != null){
-			
+			ctx.writeAndFlush(ftpResonse);
 		}
 	}
 }
