@@ -3,7 +3,6 @@ package com.orange.ftpserver.context;
 import java.util.Date;
 
 public class DefaultFtpResponse implements FtpResponse {
-
 	private int code;
 	
 	public DefaultFtpResponse(){
@@ -24,7 +23,17 @@ public class DefaultFtpResponse implements FtpResponse {
 
 	@Override
 	public String getMessage() {
-		return null;
+		ReplyMessage[] values = ReplyMessage.values();
+		ReplyMessage replyMessage = null;
+		for(ReplyMessage reply : values){
+			if(reply.getCode() == code){
+				replyMessage = reply;
+				break;
+			}
+		}
+		if(replyMessage == null)
+			replyMessage = ReplyMessage.REPLY_502_COMMAND_NOT_IMPLEMENTED;
+		return replyMessage.getMessage();
 	}
 
 	@Override

@@ -126,17 +126,12 @@ public interface FtpResponse {
     		this.message = message;
     	}
     	
-    	public String messageOf(int code){
-    		String defaultMessage = "";
-    		ReplyMessage[] values = ReplyMessage.values();
-    		if(values.length > 0){
-    			for(ReplyMessage reply : values){
-    				if(reply.code == code){
-    					defaultMessage = reply.message;
-    				}
-    			}
-    		}
-    		return defaultMessage;
+    	public int getCode(){
+    		return this.code;
+    	}
+    	
+    	public String getMessage(){
+    		return this.message;
     	}
     }
 }

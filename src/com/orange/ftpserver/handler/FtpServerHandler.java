@@ -24,7 +24,7 @@ public class FtpServerHandler extends AbstractFtpHandler {
 	{
 		FtpResponse ftpResonse = super.session.getResponse();
 		if(ftpResonse != null){
-			ctx.writeAndFlush(ftpResonse);
+			ctx.writeAndFlush(ftpResonse.getMessage());
 		}
 	}
 }
