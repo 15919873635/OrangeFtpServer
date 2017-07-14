@@ -1,5 +1,6 @@
 package com.orange.ftpserver.server;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import com.orange.ftpserver.codec.FtpRequestDecoder;
@@ -21,7 +22,7 @@ import io.netty.handler.codec.string.StringDecoder;
 
 public class DefaultFtpServer implements FtpServer {
 	
-	private Map<String,FtpServerListener> serverListenerMap;
+	private Map<String,FtpServerListener> serverListenerMap =new HashMap<String,FtpServerListener>();
 	private UserManager userManager;
 	
 	private EventLoopGroup bossGroup;

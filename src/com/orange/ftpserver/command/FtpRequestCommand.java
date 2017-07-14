@@ -66,7 +66,7 @@ public enum FtpRequestCommand {
 		FtpRequestCommand commond = FtpRequestCommand.BLANK;
 		FtpRequestCommand[] values = FtpRequestCommand.values();
 		for(FtpRequestCommand val : values){
-			if(val.valueOf().equals(name)){
+			if(val.valueOf().equalsIgnoreCase(name)){
 				commond =  val;break;
 			}
 		}

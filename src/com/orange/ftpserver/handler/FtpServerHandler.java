@@ -15,6 +15,7 @@ public class FtpServerHandler extends AbstractFtpHandler {
 		if(StringUtils.isNotBlank((String) msg)){
 			FtpRequestCommandDecoder commandDecoder = FtpRequestCommandDecoder.defaultParser();
 			commandDecoder.excuteCommand(super.session,(String)msg);
+			ctx.write(super.session.getResponse().getMessage());
 		}
 	}
 	
@@ -22,9 +23,7 @@ public class FtpServerHandler extends AbstractFtpHandler {
 	public void channelReadComplete(ChannelHandlerContext ctx)
 			throws Exception
 	{
-		FtpResponse ftpResonse = super.session.getResponse();
-		if(ftpResonse != null){
-			ctx.writeAndFlush(ftpResonse.getMessage());
-		}
+		System.out.println("123456");
+		ctx.flush();
 	}
 }

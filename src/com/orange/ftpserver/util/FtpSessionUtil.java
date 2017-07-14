@@ -6,11 +6,8 @@ import java.util.Map;
 import com.orange.ftpserver.context.FtpSession;
 
 public class FtpSessionUtil {
-	private static Map<String,FtpSession> sessionMap;
-	
+	private static Map<String,FtpSession> sessionMap = new HashMap<String,FtpSession>();
 	public static synchronized void putSession2Map(String sessionId,FtpSession ftpSession){
-		if(sessionMap != null)
-			sessionMap = new HashMap<String,FtpSession>();
 		if(!sessionMap.keySet().contains(sessionId)){
 			sessionMap.put(sessionId, ftpSession);
 		}
@@ -24,8 +21,7 @@ public class FtpSessionUtil {
 	}
 	
 	public static synchronized void deleteSession(String sessionId){
-		if(sessionMap != null 
-				&& sessionMap.keySet().contains(sessionId)){
+		if(sessionMap.keySet().contains(sessionId)){
 			sessionMap.remove(sessionId);
 		}
 	}
