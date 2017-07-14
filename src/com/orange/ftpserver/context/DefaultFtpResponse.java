@@ -9,14 +9,24 @@ public class DefaultFtpResponse implements FtpResponse {
 	public DefaultFtpResponse(int code){
 		this.code = code;
 	}
-	
+
 	@Override
-	public void string() {
-		
+	public int getCode() {
+		return code;
 	}
 
 	@Override
-	public int replyCode() {
-		return code;
+	public String getMessage() {
+		return null;
+	}
+
+	@Override
+	public long getSentTime() {
+		return 0;
+	}
+
+	@Override
+	public boolean isPositive() {
+		return false;
 	}
 }

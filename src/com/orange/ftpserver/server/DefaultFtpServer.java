@@ -4,6 +4,7 @@ import java.util.Map;
 
 import com.orange.ftpserver.codec.FtpRequestDecoder;
 import com.orange.ftpserver.handler.FtpServerHandler;
+import com.orange.ftpserver.listener.DefaultFtpServerListener;
 import com.orange.ftpserver.listener.FtpServerListener;
 import com.orange.ftpserver.user.UserManager;
 
@@ -25,6 +26,11 @@ public class DefaultFtpServer implements FtpServer {
 	
 	private EventLoopGroup bossGroup;
 	private EventLoopGroup workerGroup;
+	
+	public DefaultFtpServer(){
+		FtpServerListener defaultServerListener = new DefaultFtpServerListener();
+		serverListenerMap.put("default", defaultServerListener);
+	}
 	
 	@Override
 	public void start() {
