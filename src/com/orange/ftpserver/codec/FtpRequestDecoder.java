@@ -7,7 +7,7 @@ import io.netty.handler.codec.LineBasedFrameDecoder;
 public class FtpRequestDecoder extends LineBasedFrameDecoder {
 	 
 	public FtpRequestDecoder() {
-		super(10240);
+		super(2048);
 	}
 
 	@Override
