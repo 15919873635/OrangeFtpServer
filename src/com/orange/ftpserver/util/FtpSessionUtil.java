@@ -7,6 +7,7 @@ import com.orange.ftpserver.context.FtpSession;
 
 public class FtpSessionUtil {
 	private static Map<String,FtpSession> sessionMap = new HashMap<String,FtpSession>();
+	
 	public static synchronized void putSession2Map(String sessionId,FtpSession ftpSession){
 		if(!sessionMap.keySet().contains(sessionId)){
 			sessionMap.put(sessionId, ftpSession);
