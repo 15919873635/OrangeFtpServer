@@ -17,6 +17,6 @@ public class DefaultFtpResponse implements FtpResponse {
 
 	@Override
 	public int replyCode() {
-		return 0;
+		return code;
 	}
 }
