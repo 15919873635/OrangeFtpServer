@@ -21,7 +21,9 @@ public abstract class AbstractFtpHandler extends ChannelInboundHandlerAdapter {
 	{
 		Channel channel = ctx.channel();
 		if(session == null){
-			session = new DefaultFtpSession(channel.id().asLongText());
+			String sessionId = channel.id().asLongText();
+			session = new DefaultFtpSession(sessionId);
+			FtpSessionUtil.putSession2Map(sessionId, session);
 		}
 	}
 	
@@ -30,6 +32,7 @@ public abstract class AbstractFtpHandler extends ChannelInboundHandlerAdapter {
 	{
 		Channel channel = ctx.channel();
 		FtpSessionUtil.deleteSession(channel.id().asLongText());
+		session = null;
 	}
 	
 	@Override

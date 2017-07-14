@@ -1,19 +1,30 @@
 package com.orange.ftpserver.handler;
 
+import org.apache.commons.lang.StringUtils;
+
+import com.orange.ftpserver.command.FtpCommandDecoder;
+import com.orange.ftpserver.context.FtpResponse;
+
 import io.netty.channel.ChannelHandlerContext;
 
 public class FtpServerHandler extends AbstractFtpHandler {
 	
-	/**
-	 * 收到的消息没有指定的结束标记。 
-	 * 比如指定了lineBasedFrameDecoder，没有换行标志，是不会调用channelRead方法的，
-	 * 其他的类似
-	 */
 	@Override
     public void channelRead(ChannelHandlerContext ctx, Object msg)  
             throws Exception {
-		if(msg == null || ((String)msg).equals(""))
-			System.out.println("null");
-		System.out.println(msg);
+		if(StringUtils.isNotBlank((String) msg)){
+			FtpCommandDecoder commandDecoder = FtpCommandDecoder.defaultParser();
+			commandDecoder.excuteCommand(super.session,(String)msg);
+		}
+	}
+	
+	@Override
+	public void channelReadComplete(ChannelHandlerContext ctx)
+			throws Exception
+	{
+		FtpResponse ftpResonse = super.session.getResponse();
+		if(ftpResonse != null){
+			
+		}
 	}
 }
