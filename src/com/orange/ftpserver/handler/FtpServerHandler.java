@@ -17,4 +17,11 @@ public class FtpServerHandler extends AbstractFtpHandler {
 			ctx.writeAndFlush(super.session.getResponse().getMessage());
 		}
 	}
+	
+	@Override
+	public void channelReadComplete(ChannelHandlerContext ctx)
+			throws Exception
+	{
+		System.out.println("123456");
+	}
 }
