@@ -1,6 +1,6 @@
-package com.orange.ftpserver.enums;
+package com.orange.ftpserver.command;
 
-public enum FtpCommond {
+public enum FtpCommand {
 	/** This command tells the server to abort the previous FTP service command and
 	 * any associated transfer of data. No action is to be taken if the previous
 	 * command has been completed (including data transfer). The control connection
@@ -9,10 +9,10 @@ public enum FtpCommond {
 	 * multi-threaded.
 	 */
 	ABOR("abor"),
-	
 	ACCT("acct"),
 	APPE("appe"),
 	AUTH("auth"),
+	BLANK(""),
 	CDUP("cdup"),
 	CWD("cwd"),
 	DELE("dele"),
@@ -29,6 +29,7 @@ public enum FtpCommond {
 	MODE("mode"),
 	NLST("nlst"),
 	NOOP("noop"),
+	OPEN("open"),
 	PASS("pass"),
 	PASV("pasv"),
 	PBSZ("pbsz"),
@@ -57,14 +58,14 @@ public enum FtpCommond {
 	
 	private String name;
 	
-	private FtpCommond(String name){
+	private FtpCommand(String name){
 		this.name = name;
 	}
 	
-	public FtpCommond nameOf(String name){
-		FtpCommond commond = null;
-		FtpCommond[] values = FtpCommond.values();
-		for(FtpCommond val : values){
+	public static FtpCommand nameOf(String name){
+		FtpCommand commond = FtpCommand.BLANK;
+		FtpCommand[] values = FtpCommand.values();
+		for(FtpCommand val : values){
 			if(val.valueOf().equals(name)){
 				commond =  val;break;
 			}
