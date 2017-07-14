@@ -12,6 +12,8 @@ public class FtpServerHandler extends AbstractFtpHandler {
 	@Override
     public void channelRead(ChannelHandlerContext ctx, Object msg)  
             throws Exception {
-		System.out.println(ctx.name());
+		if(msg == null || ((String)msg).equals(""))
+			System.out.println("null");
+		System.out.println(msg);
 	}
 }

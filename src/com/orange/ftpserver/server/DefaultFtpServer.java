@@ -15,6 +15,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.handler.codec.serialization.ObjectEncoder;
+import io.netty.handler.codec.string.StringDecoder;
 
 public class DefaultFtpServer implements FtpServer {
 	
@@ -37,6 +39,8 @@ public class DefaultFtpServer implements FtpServer {
                         public void initChannel(SocketChannel ch)  
                                 throws Exception {
                         	ch.pipeline().addLast(new FtpRequestDecoder());
+                        	ch.pipeline().addLast(new StringDecoder());
+                        	ch.pipeline().addLast(new ObjectEncoder());
                             ch.pipeline().addLast(new FtpServerHandler());  
                         }  
               })
