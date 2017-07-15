@@ -8,7 +8,7 @@ import com.orange.ftpserver.context.DefaultFtpResponse;
 import com.orange.ftpserver.context.FtpRequestCommand;
 import com.orange.ftpserver.context.FtpSession;
 
-public class OPEN extends AbstractFtpCommand{
+public final class OPEN extends AbstractFtpCommand{
 	
 	public OPEN(FtpSession ftpSession,String[] parameters){
 		super(ftpSession,FtpRequestCommand.OPEN,parameters);
