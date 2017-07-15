@@ -46,7 +46,7 @@ public class DefaultFtpServer implements FtpServer {
                 ChannelPipeline pipeline = Channels.pipeline();  
                 pipeline.addLast("stringDecoder", new StringDecoder());
                 pipeline.addLast("stringEncoder", new StringEncoder());
-                pipeline.addLast("helloHandler", new FtpServerHandler());  
+                pipeline.addLast("ftpServerHandler", new FtpServerHandler());  
                 return pipeline;  
             }  
         });  

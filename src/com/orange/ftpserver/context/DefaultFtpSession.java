@@ -3,16 +3,16 @@ package com.orange.ftpserver.context;
 
 import org.jboss.netty.channel.Channel;
 
-import com.orange.ftpserver.command.FtpRequestCommand;
 import com.orange.ftpserver.util.FtpSessionUtil;
 
 public class DefaultFtpSession implements FtpSession {
 	
 	private Integer sessionId;
-	private FtpRequestCommand ftpCommand;
+	private FtpRequest ftpRequest;
 	private FtpResponse ftpResponse;
 	
 	public DefaultFtpSession(){
+		ftpRequest = new DefaultFtpRequest();
 		ftpResponse = new DefaultFtpResponse();
 	}
 	
@@ -24,16 +24,6 @@ public class DefaultFtpSession implements FtpSession {
 	@Override
 	public Integer getSessionId() {
 		return sessionId;
-	}
-	
-	@Override
-	public void setCommand(FtpRequestCommand ftpCommand) {
-		this.ftpCommand = ftpCommand;
-	}
-	
-	@Override
-	public FtpRequestCommand getCommand() {
-		return ftpCommand;
 	}
 
 	@Override
@@ -49,5 +39,10 @@ public class DefaultFtpSession implements FtpSession {
 	@Override
 	public boolean isSecure() {
 		return false;
+	}
+
+	@Override
+	public FtpRequest getRequest() {
+		return ftpRequest;
 	}
 }

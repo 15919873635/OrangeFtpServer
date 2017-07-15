@@ -8,6 +8,15 @@ import com.orange.ftpserver.context.FtpSession;
 public class FtpSessionUtil {
 	private static Map<Integer,FtpSession> sessionMap = new HashMap<Integer,FtpSession>();
 	
+	public static boolean hasEOL(String message){
+		if(message.endsWith("\r\n") 
+				|| message.endsWith("\r") 
+				|| (!message.endsWith("\r\n") && message.endsWith("\n")))
+			return true;
+		else
+			return false;
+	}
+	
 	public static synchronized void putSession2Map(Integer sessionId,FtpSession ftpSession){
 		if(!sessionMap.keySet().contains(sessionId)){
 			sessionMap.put(sessionId, ftpSession);
