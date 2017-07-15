@@ -2,6 +2,8 @@ package com.orange.ftpserver.context;
 
 import java.util.Date;
 
+import com.orange.ftpserver.obj.FtpTransferObject;
+
 public class DefaultFtpResponse implements FtpResponse {
 	
 	private FtpSession ftpSession;
@@ -53,5 +55,13 @@ public class DefaultFtpResponse implements FtpResponse {
 	@Override
 	public FtpSession getSession() {
 		return ftpSession;
+	}
+
+	@Override
+	public FtpTransferObject getObjectMessage() {
+		FtpTransferObject obj = new FtpTransferObject();
+		obj.setMessage(getMessage());
+		obj.setSessionId(ftpSession.getSessionId());
+		return obj;
 	}
 }

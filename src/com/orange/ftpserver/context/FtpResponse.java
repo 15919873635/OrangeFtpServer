@@ -1,5 +1,7 @@
 package com.orange.ftpserver.context;
 
+import com.orange.ftpserver.obj.FtpTransferObject;
+
 public interface FtpResponse {
 	
 	FtpSession getSession();
@@ -17,6 +19,8 @@ public interface FtpResponse {
      * @return The reply message
      */
     String getMessage();
+    
+    FtpTransferObject getObjectMessage();
     
     /**
      * Returns the timestamp (in milliseconds since the epoch time) when this 

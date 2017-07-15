@@ -13,6 +13,6 @@ public class FtpServerHandler extends AbstractFtpHandler {
         String message = (String) event.getMessage();
 		FtpRequestCommandParser commandDecoder = FtpRequestCommandParser.defaultParser();
 		commandDecoder.excuteCommand(super.session,message);
-		ctx.getChannel().write(super.session.getResponse());
+		ctx.getChannel().write(super.session.getResponse().getObjectMessage());
 	}
 }
