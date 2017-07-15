@@ -21,14 +21,13 @@ public class DefaultFtpServer implements FtpServer {
 	private ExecutorService workerGroup;
 	
 	public DefaultFtpServer(){
-		
+		bossGroup = Executors.newCachedThreadPool();  
+		workerGroup = Executors.newCachedThreadPool(); 
 	}
 	
 	@Override
 	public void start() {
 		ServerBootstrap bootstrap = new ServerBootstrap();  
-		bossGroup = Executors.newCachedThreadPool();  
-		workerGroup = Executors.newCachedThreadPool();  
         bootstrap.setFactory(new NioServerSocketChannelFactory(bossGroup, workerGroup));  
         // 设置管道的工厂  
         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {  
