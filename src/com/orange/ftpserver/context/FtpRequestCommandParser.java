@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.orange.ftpserver.command.CLOSE;
 import com.orange.ftpserver.command.OPEN;
 import com.orange.ftpserver.exception.FtpCommandException;
 import com.orange.ftpserver.util.FtpSessionUtil;
@@ -62,7 +63,9 @@ public class FtpRequestCommandParser {
 			OPEN open = new OPEN(session,parameters);
 			open.exec();
 			break;
-
+		case CLOSE:
+			CLOSE close = new CLOSE(session,parameters);
+			close.exec();
 		default:
 			break;
 		}

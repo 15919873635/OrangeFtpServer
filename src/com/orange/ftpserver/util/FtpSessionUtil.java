@@ -30,7 +30,7 @@ public class FtpSessionUtil {
 			return null;
 	}
 	
-	public static synchronized void deleteSession(Integer sessionId){
+	public static synchronized void deleteSession(String sessionId){
 		if(sessionMap.keySet().contains(sessionId)){
 			sessionMap.remove(sessionId);
 		}

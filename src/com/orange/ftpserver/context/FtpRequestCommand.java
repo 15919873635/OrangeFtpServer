@@ -14,6 +14,7 @@ public enum FtpRequestCommand {
 	AUTH("auth"),
 	BLANK(""),
 	CDUP("cdup"),
+	CLOSE("close"),
 	CWD("cwd"),
 	DELE("dele"),
 	EPRT("eprt"),

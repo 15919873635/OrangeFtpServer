@@ -1,20 +1,14 @@
 package com.orange.ftpserver.handler;
 
 import org.apache.log4j.Logger;
-import static org.jboss.netty.buffer.ChannelBuffers.dynamicBuffer; 
-import org.jboss.netty.buffer.ChannelBuffer;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.ChannelStateEvent;
-import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.ExceptionEvent;
-import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 
 import com.orange.ftpserver.context.DefaultFtpSession;
 import com.orange.ftpserver.context.FtpSession;
-import com.orange.ftpserver.obj.FtpTransferObject;
-import com.orange.ftpserver.util.FtpSessionUtil;
 
 public abstract class AbstractFtpHandler extends SimpleChannelHandler {
 
@@ -22,13 +16,11 @@ public abstract class AbstractFtpHandler extends SimpleChannelHandler {
 	
 	protected FtpSession session;
 	
-	private final ChannelBuffer buffer = dynamicBuffer();  
 	
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
 	{
 		Channel channel = ctx.getChannel();
-		System.out.println(channel.getId());
 		if(session == null){
 			session = new DefaultFtpSession();
 			DefaultFtpSession ftpSession = (DefaultFtpSession)session;
@@ -37,28 +29,9 @@ public abstract class AbstractFtpHandler extends SimpleChannelHandler {
 	}
 	
 	@Override
-	public void channelDisconnected(ChannelHandlerContext ctx,ChannelStateEvent e) throws Exception
-	{
-		Channel channel = ctx.getChannel();
-		FtpSessionUtil.deleteSession(channel.getId());
-		session = null;
-	}
-	
-	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent cause) throws Exception
 	{ 
 		System.out.println("error");
 		logger.error(cause.getCause().getMessage(), cause.getCause());
-	}
-	
-	@Override
-	public void writeRequested(ChannelHandlerContext ctx, MessageEvent e) throws Exception
-	{
-		FtpTransferObject transferObject = (FtpTransferObject)e.getMessage();
-		buffer.writeInt(transferObject.getSessionId().getBytes().length);  
-        buffer.writeBytes(transferObject.getSessionId().getBytes()); 
-        buffer.writeInt(transferObject.getMessage().getBytes().length);  
-        buffer.writeBytes(transferObject.getMessage().getBytes());
-        Channels.write(ctx, e.getFuture(), buffer); 
 	}
 }
