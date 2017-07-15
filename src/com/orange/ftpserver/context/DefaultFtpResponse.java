@@ -5,7 +5,7 @@ import java.util.Date;
 import com.alibaba.fastjson.JSONObject;
 import com.orange.ftpserver.obj.FtpTransferResponseObject;
 
-public class DefaultFtpResponse implements FtpResponse {
+public final class DefaultFtpResponse implements FtpResponse {
 	
 	private FtpSession ftpSession;
 	

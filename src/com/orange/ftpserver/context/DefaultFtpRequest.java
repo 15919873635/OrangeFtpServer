@@ -1,6 +1,6 @@
 package com.orange.ftpserver.context;
 
-public class DefaultFtpRequest implements FtpRequest {
+public final class DefaultFtpRequest implements FtpRequest {
 	private FtpSession ftpSession;
 	private FtpCommand ftpCommand;
 	

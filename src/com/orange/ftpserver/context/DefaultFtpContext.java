@@ -7,7 +7,7 @@ import com.orange.ftpserver.listener.FtpServerListener;
 import com.orange.ftpserver.server.FtpServer;
 import com.orange.ftpserver.user.UserManager;
 
-public class DefaultFtpContext implements FtpContext {
+public final class DefaultFtpContext implements FtpContext {
 	private Map<String, FtpServerListener> serverListenerMap =new HashMap<String,FtpServerListener>();
 	private Map<String,FtpSession> sessionMap = new HashMap<String,FtpSession>();
 	private UserManager userManager;

@@ -4,7 +4,7 @@ import com.orange.ftpserver.context.FtpRequest;
 import com.orange.ftpserver.context.FtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 
-public class DefaultFtpServerListener implements FtpServerListener{
+public final class DefaultFtpServerListener implements FtpServerListener{
 
 	@Override
 	public void beforeCommond(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException {

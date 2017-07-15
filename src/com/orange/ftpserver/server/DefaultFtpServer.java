@@ -15,19 +15,26 @@ import org.jboss.netty.handler.codec.string.StringEncoder;
 import com.orange.ftpserver.handler.FtpServerHandler;
 
 
-public class DefaultFtpServer implements FtpServer {
+public final class DefaultFtpServer implements FtpServer {
 	
 	private ExecutorService bossGroup;
 	private ExecutorService workerGroup;
+	private int serverPort;
 	
 	public DefaultFtpServer(){
-		bossGroup = Executors.newCachedThreadPool();  
-		workerGroup = Executors.newCachedThreadPool(); 
+		serverPort = 21;
+		
+	}
+	
+	public DefaultFtpServer(int serverPort){
+		this.serverPort = serverPort;
 	}
 	
 	@Override
 	public void start() {
-		ServerBootstrap bootstrap = new ServerBootstrap();  
+		ServerBootstrap bootstrap = new ServerBootstrap(); 
+		bossGroup = Executors.newCachedThreadPool();  
+		workerGroup = Executors.newCachedThreadPool(); 
         bootstrap.setFactory(new NioServerSocketChannelFactory(bossGroup, workerGroup));  
         // 设置管道的工厂  
         bootstrap.setPipelineFactory(new ChannelPipelineFactory() {  
@@ -40,7 +47,7 @@ public class DefaultFtpServer implements FtpServer {
                 return pipeline;  
             }  
         });  
-        bootstrap.bind(new InetSocketAddress(13100));  
+        bootstrap.bind(new InetSocketAddress(serverPort));  
 	}
 
 	@Override
@@ -49,5 +56,10 @@ public class DefaultFtpServer implements FtpServer {
 			workerGroup.shutdownNow();
 		if(bossGroup != null)
 			bossGroup.shutdownNow();
+	}
+
+	@Override
+	public int getServerPort() {
+		return this.serverPort;
 	}
 }

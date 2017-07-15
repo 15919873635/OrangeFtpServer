@@ -2,7 +2,7 @@ package com.orange.ftpserver.obj;
 
 import java.io.Serializable;
 
-public class FtpTransferResponseObject implements Serializable{
+public final class FtpTransferResponseObject implements Serializable{
 
 	/**
 	 * 

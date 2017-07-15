@@ -11,7 +11,7 @@ import com.orange.ftpserver.context.FtpSession;
 import com.orange.ftpserver.factory.DefaultServerFactory;
 import com.orange.ftpserver.obj.FtpTransferRequestObject;
 
-public class FtpServerHandler extends AbstractFtpHandler {
+public final class FtpServerHandler extends AbstractFtpHandler {
 	protected FtpSession session;
 	protected FtpRequestCommandParser commandDecoder = FtpRequestCommandParser.defaultParser();
 	

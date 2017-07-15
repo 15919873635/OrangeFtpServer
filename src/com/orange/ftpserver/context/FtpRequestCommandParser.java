@@ -11,7 +11,7 @@ import com.orange.ftpserver.command.OPEN;
 import com.orange.ftpserver.exception.FtpCommandException;
 import com.orange.ftpserver.obj.FtpTransferRequestObject;
 
-public class FtpRequestCommandParser {
+public final class FtpRequestCommandParser {
 	
 	public static FtpRequestCommandParser defaultParser(){
 		return new FtpRequestCommandParser();

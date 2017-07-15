@@ -11,7 +11,7 @@ import com.orange.ftpserver.server.DefaultFtpServer;
 import com.orange.ftpserver.server.FtpServer;
 import com.orange.ftpserver.user.DefaultUserManager;
 
-public class DefaultServerFactory implements FtpServerFactory{
+public final class DefaultServerFactory implements FtpServerFactory{
 	private static DefaultFtpContext ftpContext = new DefaultFtpContext();;
 	
 	public DefaultServerFactory(){
