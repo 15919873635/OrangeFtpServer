@@ -1,13 +1,15 @@
 package com.orange.ftpserver.context;
 
 
+import java.util.UUID;
+
 import org.jboss.netty.channel.Channel;
 
 import com.orange.ftpserver.util.FtpSessionUtil;
 
 public class DefaultFtpSession implements FtpSession {
 	
-	private Integer sessionId;
+	private String sessionId;
 	private FtpRequest ftpRequest;
 	private FtpResponse ftpResponse;
 	
@@ -17,12 +19,12 @@ public class DefaultFtpSession implements FtpSession {
 	}
 	
 	public void initByChannel(Channel channel){
-		this.sessionId = channel.getId();
+		this.sessionId = UUID.randomUUID().toString();
 		FtpSessionUtil.putSession2Map(sessionId, this);
 	}
 	
 	@Override
-	public Integer getSessionId() {
+	public String getSessionId() {
 		return sessionId;
 	}
 

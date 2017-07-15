@@ -50,7 +50,7 @@ public class DefaultFtpServer implements FtpServer {
                 return pipeline;  
             }  
         });  
-        bootstrap.bind(new InetSocketAddress(10101));  
+        bootstrap.bind(new InetSocketAddress(13100));  
 	}
 
 	@Override

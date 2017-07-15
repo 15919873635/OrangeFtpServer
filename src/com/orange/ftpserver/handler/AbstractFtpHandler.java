@@ -21,6 +21,7 @@ public abstract class AbstractFtpHandler extends SimpleChannelHandler {
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
 	{
 		Channel channel = ctx.getChannel();
+		System.out.println(channel.getId());
 		if(session == null){
 			session = new DefaultFtpSession();
 			DefaultFtpSession ftpSession = (DefaultFtpSession)session;

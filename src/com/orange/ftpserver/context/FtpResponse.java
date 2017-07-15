@@ -130,11 +130,11 @@ public interface FtpResponse {
     	}
     	
     	public int getCode(){
-    		return this.code;
+    		return code;
     	}
     	
     	public String getMessage(){
-    		return this.message;
+    		return message;
     	}
     }
 }

@@ -6,7 +6,7 @@ import java.util.Map;
 import com.orange.ftpserver.context.FtpSession;
 
 public class FtpSessionUtil {
-	private static Map<Integer,FtpSession> sessionMap = new HashMap<Integer,FtpSession>();
+	private static Map<String,FtpSession> sessionMap = new HashMap<String,FtpSession>();
 	
 	public static boolean hasEOL(String message){
 		if(message.endsWith("\r\n") 
@@ -17,13 +17,13 @@ public class FtpSessionUtil {
 			return false;
 	}
 	
-	public static synchronized void putSession2Map(Integer sessionId,FtpSession ftpSession){
+	public static synchronized void putSession2Map(String sessionId,FtpSession ftpSession){
 		if(!sessionMap.keySet().contains(sessionId)){
 			sessionMap.put(sessionId, ftpSession);
 		}
 	}
 	
-	public static FtpSession getSession(Integer sessionId){
+	public static FtpSession getSession(String sessionId){
 		if(sessionMap != null)
 			return sessionMap.get(sessionId);
 		else

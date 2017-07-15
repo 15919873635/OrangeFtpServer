@@ -30,7 +30,7 @@ public class DefaultFtpResponse implements FtpResponse {
 		ReplyMessage[] values = ReplyMessage.values();
 		ReplyMessage replyMessage = null;
 		for(ReplyMessage reply : values){
-			if(reply.getCode() == code){
+			if(reply.getCode() == this.code){
 				replyMessage = reply;
 				break;
 			}
