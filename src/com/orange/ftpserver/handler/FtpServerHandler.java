@@ -1,9 +1,11 @@
 package com.orange.ftpserver.handler;
 
+import org.apache.commons.lang.StringUtils;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
 
 import com.orange.ftpserver.context.DefaultFtpContext;
+import com.orange.ftpserver.context.DefaultFtpSession;
 import com.orange.ftpserver.context.FtpRequestCommandParser;
 import com.orange.ftpserver.context.FtpSession;
 import com.orange.ftpserver.factory.DefaultServerFactory;
@@ -18,11 +20,16 @@ public class FtpServerHandler extends AbstractFtpHandler {
             throws Exception {
         String message = (String) event.getMessage();
         FtpTransferRequestObject requestObject = commandDecoder.getRequestObject(message);
-        if(requestObject != null){
+        if(requestObject != null 
+        		&& StringUtils.isNotBlank(requestObject.getSessionId())){
         	DefaultFtpContext ftpContext = (DefaultFtpContext)DefaultServerFactory.getFtpContext();
             if(ftpContext.getSession(requestObject.getSessionId()) == null){
-            	commandDecoder.excuteCommand(session,requestObject);
+            	session = new DefaultFtpSession();
+            	DefaultFtpSession ftpSession = (DefaultFtpSession)session;
+            	ftpSession.setSessionId(requestObject.getSessionId());
+            	ftpContext.putSession2Map(requestObject.getSessionId(), ftpSession);
             }
+            commandDecoder.excuteCommand(session,requestObject);
         }
 		ctx.getChannel().write(session.getResponse().getMessage());
 	}

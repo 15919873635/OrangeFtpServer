@@ -1,12 +1,5 @@
 package com.orange.ftpserver.context;
 
-
-import java.util.UUID;
-
-import org.jboss.netty.channel.Channel;
-
-import com.orange.ftpserver.factory.DefaultServerFactory;
-
 public class DefaultFtpSession implements FtpSession {
 	
 	private String sessionId;
@@ -18,10 +11,8 @@ public class DefaultFtpSession implements FtpSession {
 		ftpResponse = new DefaultFtpResponse(this);
 	}
 	
-	public void initByChannel(Channel channel){
-		this.sessionId = UUID.randomUUID().toString();
-		DefaultFtpContext ftpContext = (DefaultFtpContext)DefaultServerFactory.getFtpContext();
-		ftpContext.putSession2Map(sessionId, this);
+	public void setSessionId(String sessionId){
+		this.sessionId = sessionId;
 	}
 	
 	@Override
