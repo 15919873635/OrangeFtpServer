@@ -12,6 +12,7 @@ public class DefaultFtpContext implements FtpContext {
 	private Map<String,FtpSession> sessionMap = new HashMap<String,FtpSession>();
 	private UserManager userManager;
 	private FtpServer ftpServer;
+	
 	@Override
 	public UserManager getUserManager() {
 		return userManager;

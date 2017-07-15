@@ -9,17 +9,21 @@ import com.orange.ftpserver.listener.DefaultFtpServerListener;
 import com.orange.ftpserver.listener.FtpServerListener;
 import com.orange.ftpserver.server.DefaultFtpServer;
 import com.orange.ftpserver.server.FtpServer;
+import com.orange.ftpserver.user.DefaultUserManager;
 
 public class DefaultServerFactory implements FtpServerFactory{
-	private static FtpContext ftpContext;
+	private static DefaultFtpContext ftpContext = new DefaultFtpContext();;
+	
+	public DefaultServerFactory(){
+		Map<String,FtpServerListener> defaultListenerMap = createListenerMap();
+		ftpContext.setListenerMap(defaultListenerMap);
+		ftpContext.setUserManager(new DefaultUserManager());
+	}
+	
 	@Override
 	public FtpServer createServer() {
 		FtpServer ftpServer = new DefaultFtpServer();
-		ftpContext = new DefaultFtpContext();
-		DefaultFtpContext defaultFtpContext = (DefaultFtpContext)ftpContext;
-		Map<String,FtpServerListener> defaultListenerMap = createListenerMap();
-		defaultFtpContext.setListenerMap(defaultListenerMap);
-		defaultFtpContext.setFtpServer(ftpServer);
+		ftpContext.setFtpServer(ftpServer);
 		return ftpServer;
 	}
 	
