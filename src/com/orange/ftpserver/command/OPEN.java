@@ -26,7 +26,7 @@ public class OPEN extends AbstractFtpCommand{
 		boolean isRightAddress = false;
 		if(address.contains(":")){
 			String[] addSplit = address.split(":");
-			if(address.length() == 2 
+			if(addSplit.length == 2
 					&& addSplit[0].matches(ServerConstant.IP_VERIFICATION)
 					&& StringUtils.isNumeric(addSplit[1])){
 				isRightAddress = true;

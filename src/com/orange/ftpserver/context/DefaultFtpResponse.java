@@ -2,6 +2,9 @@ package com.orange.ftpserver.context;
 
 import java.util.Date;
 
+import com.alibaba.fastjson.JSONObject;
+import com.orange.ftpserver.obj.FtpTransferResponseObject;
+
 public class DefaultFtpResponse implements FtpResponse {
 	
 	private FtpSession ftpSession;
@@ -27,7 +30,6 @@ public class DefaultFtpResponse implements FtpResponse {
 
 	@Override
 	public String getMessage() {
-		StringBuffer messageBuffer = new StringBuffer(ftpSession.getSessionId());
 		ReplyMessage[] values = ReplyMessage.values();
 		ReplyMessage replyMessage = null;
 		for(ReplyMessage reply : values){
@@ -38,8 +40,10 @@ public class DefaultFtpResponse implements FtpResponse {
 		}
 		if(replyMessage == null)
 			replyMessage = ReplyMessage.REPLY_502_COMMAND_NOT_IMPLEMENTED;
-		messageBuffer.append(",").append(replyMessage.getMessage());
-		return messageBuffer.toString();
+		FtpTransferResponseObject responseObject = new FtpTransferResponseObject();
+		responseObject.setSessionId(this.ftpSession.getSessionId());
+		responseObject.setRespMessage(replyMessage.getMessage());
+		return JSONObject.toJSONString(responseObject);
 	}
 
 	@Override
