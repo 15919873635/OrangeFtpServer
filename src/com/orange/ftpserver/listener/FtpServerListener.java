@@ -1,22 +1,28 @@
 package com.orange.ftpserver.listener;
 
-import com.orange.ftpserver.context.FtpRequest;
+import com.orange.ftpserver.context.CommandResult;
 import com.orange.ftpserver.context.FtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 
 public interface FtpServerListener {
-	void beforeCommond(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
-	void afterCommond(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
-	void beforeRmdir(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
-	void onRmdir(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
-	void afterRmdir(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
-	void beforeStore(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
-	void onStore(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
-	void afterStore(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
-	void beforeAppend(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
-	void onAppend(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
-	void afterAppend(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
-	void beforeClose(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
-	void onClose(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
-	void afterClose(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
+	CommandResult beforeCommond(FtpSession ftpSession) throws FtpCommandException;
+	CommandResult afterCommond(FtpSession ftpSession) throws FtpCommandException;
+	void beforeRmdir(FtpSession ftpSession) throws FtpCommandException;
+	void onRmdir(FtpSession ftpSession) throws FtpCommandException;
+	void afterRmdir(FtpSession ftpSession) throws FtpCommandException;
+	void beforeMkdir(FtpSession ftpSession) throws FtpCommandException;
+	void onMkdir(FtpSession ftpSession) throws FtpCommandException;
+	void afterMkdir(FtpSession ftpSession) throws FtpCommandException;
+	void beforeStore(FtpSession ftpSession) throws FtpCommandException;
+	void onStore(FtpSession ftpSession) throws FtpCommandException;
+	void afterStore(FtpSession ftpSession) throws FtpCommandException;
+	void beforeAppend(FtpSession ftpSession) throws FtpCommandException;
+	void onAppend(FtpSession ftpSession) throws FtpCommandException;
+	void afterAppend(FtpSession ftpSession) throws FtpCommandException;
+	void beforeDelete(FtpSession ftpSession) throws FtpCommandException;
+	void onDelete(FtpSession ftpSession) throws FtpCommandException;
+	void afterDelete(FtpSession ftpSession) throws FtpCommandException;
+	void beforeClose(FtpSession ftpSession) throws FtpCommandException;
+	void onClose(FtpSession ftpSession) throws FtpCommandException;
+	void afterClose(FtpSession ftpSession) throws FtpCommandException;
 }
