@@ -3,7 +3,7 @@ package com.orange.ftpserver.handler;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
 
-import com.orange.ftpserver.command.FtpRequestCommandParser;
+import com.orange.ftpserver.context.FtpRequestCommandParser;
 
 public class FtpServerHandler extends AbstractFtpHandler {
 	

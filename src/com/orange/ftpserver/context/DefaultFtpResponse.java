@@ -3,10 +3,14 @@ package com.orange.ftpserver.context;
 import java.util.Date;
 
 public class DefaultFtpResponse implements FtpResponse {
+	
+	private FtpSession ftpSession;
+	
 	private int code;
 	
-	public DefaultFtpResponse(){
+	public DefaultFtpResponse(FtpSession ftpSession){
 		this.code = 0;
+		this.ftpSession = ftpSession;
 	}
 	
 	public DefaultFtpResponse(int code){
@@ -44,5 +48,10 @@ public class DefaultFtpResponse implements FtpResponse {
 	@Override
 	public boolean isPositive() {
 		return false;
+	}
+
+	@Override
+	public FtpSession getSession() {
+		return ftpSession;
 	}
 }

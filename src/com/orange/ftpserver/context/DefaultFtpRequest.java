@@ -1,22 +1,23 @@
 package com.orange.ftpserver.context;
 
-import com.orange.ftpserver.command.FtpRequestCommand;
-
 public class DefaultFtpRequest implements FtpRequest {
-	private FtpRequestCommand ftpCommand;
-	private FtpCommandParameter commandParameter;
+	private FtpSession ftpSession;
+	private FtpCommand ftpCommand;
 	
+	public DefaultFtpRequest(FtpSession ftpSession){
+		this.ftpSession = ftpSession;
+	}
+	
+	public void setFtpCommand(FtpCommand ftpCommand){
+		this.ftpCommand = ftpCommand;
+	}
 	@Override
-	public FtpRequestCommand getCommand() {
+	public FtpSession getSession() {
+		return ftpSession;
+	}
+
+	@Override
+	public FtpCommand getFtpCommand() {
 		return ftpCommand;
-	}
-
-	@Override
-	public FtpCommandParameter getParameters() {
-		return commandParameter;
-	}
-
-	public void setCommand(FtpRequestCommand ftpRequestCommand) {
-		this.ftpCommand = ftpRequestCommand;
 	}
 }

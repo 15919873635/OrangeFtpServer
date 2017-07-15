@@ -12,8 +12,8 @@ public class DefaultFtpSession implements FtpSession {
 	private FtpResponse ftpResponse;
 	
 	public DefaultFtpSession(){
-		ftpRequest = new DefaultFtpRequest();
-		ftpResponse = new DefaultFtpResponse();
+		ftpRequest = new DefaultFtpRequest(this);
+		ftpResponse = new DefaultFtpResponse(this);
 	}
 	
 	public void initByChannel(Channel channel){

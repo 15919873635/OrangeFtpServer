@@ -1,10 +1,8 @@
-package com.orange.ftpserver.command;
+package com.orange.ftpserver.context;
 
 import org.apache.commons.lang.StringUtils;
 
-import com.orange.ftpserver.context.DefaultFtpRequest;
-import com.orange.ftpserver.context.DefaultFtpResponse;
-import com.orange.ftpserver.context.FtpSession;
+import com.orange.ftpserver.command.OPEN;
 import com.orange.ftpserver.exception.FtpCommandException;
 import com.orange.ftpserver.util.FtpSessionUtil;
 
@@ -28,12 +26,10 @@ public class FtpRequestCommandParser {
 	public void excuteCommand(FtpSession session,String reciveMessage) 
 			throws FtpCommandException{
 		FtpRequestCommand recivedCommand = parseCommand(reciveMessage);
-		DefaultFtpRequest ftpRequest = (DefaultFtpRequest)session.getRequest();
-		ftpRequest.setCommand(recivedCommand);
 		switch (recivedCommand) {
 		case OPEN:
-			DefaultFtpResponse ftpResponse = (DefaultFtpResponse)session.getResponse();
-			ftpResponse.setCode(220);
+			OPEN open = new OPEN(session,new String[2]);
+			open.exec();
 			break;
 
 		default:
