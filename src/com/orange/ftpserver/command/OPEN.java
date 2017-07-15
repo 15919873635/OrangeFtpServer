@@ -16,7 +16,8 @@ public class OPEN extends AbstractFtpCommand{
 	
 	@Override
 	public void exec() {
-		if(super.commandParameter.length == 1 && hostAndPort(super.commandParameter[0])){
+		if(super.commandParameter.length == 1 
+				&& hostAndPort(super.commandParameter[0])){
 			setExecResultCode(220);
 		}else
 			setExecResultCode(501);
