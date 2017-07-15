@@ -23,7 +23,8 @@ public class FtpServerHandler extends AbstractFtpHandler {
         if(requestObject != null 
         		&& StringUtils.isNotBlank(requestObject.getSessionId())){
         	DefaultFtpContext ftpContext = (DefaultFtpContext)DefaultServerFactory.getFtpContext();
-            if(ftpContext.getSession(requestObject.getSessionId()) == null){
+        	session = ftpContext.getSession(requestObject.getSessionId());
+        	if(session == null){
             	session = new DefaultFtpSession();
             	DefaultFtpSession ftpSession = (DefaultFtpSession)session;
             	ftpSession.setSessionId(requestObject.getSessionId());
