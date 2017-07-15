@@ -38,12 +38,20 @@ public abstract class AbstractFtpCommand implements FtpCommand {
 		return commandParameter;
 	}
 	
+	private void onCommand(){
+		
+	}
+	
 	public void executCommand() throws Exception{
+		exec();
 		Map<String,FtpServerListener> listenerMap = DefaultServerFactory.getFtpContext().getListenerMap();
 		Collection<FtpServerListener> values = listenerMap.values();
 		for(FtpServerListener listener : values){
 			listener.beforeCommond(ftpSession);
 		}
-		exec();
+		onCommand();
+		for(FtpServerListener listener : values){
+			listener.afterCommond(ftpSession);
+		}
 	}
 }
