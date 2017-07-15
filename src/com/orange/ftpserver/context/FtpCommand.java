@@ -4,5 +4,4 @@ public interface FtpCommand {
 	FtpSession getSession();
 	FtpRequestCommand getCommand();
 	String[] getParameters();
-	void exec();
 }
