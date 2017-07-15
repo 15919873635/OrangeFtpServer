@@ -1,20 +1,22 @@
 package com.orange.ftpserver.listener;
 
+import com.orange.ftpserver.context.FtpRequest;
+import com.orange.ftpserver.context.FtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 
 public interface FtpServerListener {
-	void beforeCommond() throws FtpCommandException;
-	void afterCommond() throws FtpCommandException;
-	void beforeRmdir() throws FtpCommandException;
-	void onRmdir() throws FtpCommandException;
-	void afterRmdir() throws FtpCommandException;
-	void beforeStore() throws FtpCommandException;
-	void onStore() throws FtpCommandException;
-	void afterStore() throws FtpCommandException;
-	void beforeAppend() throws FtpCommandException;
-	void onAppend() throws FtpCommandException;
-	void afterAppend() throws FtpCommandException;
-	void beforeClose() throws FtpCommandException;
-	void onClose() throws FtpCommandException;
-	void afterClose() throws FtpCommandException;
+	void beforeCommond(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
+	void afterCommond(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
+	void beforeRmdir(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
+	void onRmdir(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
+	void afterRmdir(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
+	void beforeStore(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
+	void onStore(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
+	void afterStore(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
+	void beforeAppend(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
+	void onAppend(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
+	void afterAppend(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
+	void beforeClose(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
+	void onClose(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
+	void afterClose(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException;
 }

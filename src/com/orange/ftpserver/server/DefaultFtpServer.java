@@ -1,8 +1,6 @@
 package com.orange.ftpserver.server;
 
 import java.net.InetSocketAddress;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -15,22 +13,15 @@ import org.jboss.netty.handler.codec.string.StringDecoder;
 import org.jboss.netty.handler.codec.string.StringEncoder;
 
 import com.orange.ftpserver.handler.FtpServerHandler;
-import com.orange.ftpserver.listener.DefaultFtpServerListener;
-import com.orange.ftpserver.listener.FtpServerListener;
-import com.orange.ftpserver.user.UserManager;
 
 
 public class DefaultFtpServer implements FtpServer {
-	
-	private Map<String,FtpServerListener> serverListenerMap =new HashMap<String,FtpServerListener>();
-	private UserManager userManager;
 	
 	private ExecutorService bossGroup;
 	private ExecutorService workerGroup;
 	
 	public DefaultFtpServer(){
-		FtpServerListener defaultServerListener = new DefaultFtpServerListener();
-		serverListenerMap.put("default", defaultServerListener);
+		
 	}
 	
 	@Override
@@ -59,19 +50,5 @@ public class DefaultFtpServer implements FtpServer {
 			workerGroup.shutdownNow();
 		if(bossGroup != null)
 			bossGroup.shutdownNow();
-	}
-	
-	public void setServerListeners(Map<String, FtpServerListener> serverListenerMap){
-		this.serverListenerMap = serverListenerMap;
-	}
-	
-	@Override
-	public Map<String, FtpServerListener> getServerListeners() {
-		return serverListenerMap;
-	}
-
-	@Override
-	public UserManager getUserManager() {
-		return userManager;
 	}
 }

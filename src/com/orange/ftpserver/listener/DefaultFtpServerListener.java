@@ -1,76 +1,78 @@
 package com.orange.ftpserver.listener;
 
+import com.orange.ftpserver.context.FtpRequest;
+import com.orange.ftpserver.context.FtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 
 public class DefaultFtpServerListener implements FtpServerListener{
 
 	@Override
-	public void beforeCommond() throws FtpCommandException {
+	public void beforeCommond(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException {
 		
 	}
 
 	@Override
-	public void afterCommond() throws FtpCommandException {
+	public void afterCommond(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException {
 		
 	}
 
 	@Override
-	public void beforeRmdir() throws FtpCommandException {
+	public void beforeRmdir(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException {
 		
 	}
 
 	@Override
-	public void onRmdir() throws FtpCommandException {
+	public void onRmdir(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException {
 		
 	}
 
 	@Override
-	public void afterRmdir() throws FtpCommandException {
+	public void afterRmdir(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException {
 		
 	}
 
 	@Override
-	public void beforeStore() throws FtpCommandException {
+	public void beforeStore(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException {
 		
 	}
 
 	@Override
-	public void onStore() throws FtpCommandException {
+	public void onStore(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException {
 		
 	}
 
 	@Override
-	public void afterStore() throws FtpCommandException {
+	public void afterStore(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException {
 		
 	}
 
 	@Override
-	public void beforeAppend() throws FtpCommandException {
+	public void beforeAppend(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException {
 		
 	}
 
 	@Override
-	public void onAppend() throws FtpCommandException {
+	public void onAppend(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException {
 		
 	}
 
 	@Override
-	public void afterAppend() throws FtpCommandException {
+	public void afterAppend(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException {
 		
 	}
 
 	@Override
-	public void beforeClose() throws FtpCommandException {
+	public void beforeClose(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException {
 		
 	}
 
 	@Override
-	public void onClose() throws FtpCommandException {
+	public void onClose(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException {
 		
 	}
 
 	@Override
-	public void afterClose() throws FtpCommandException {
+	public void afterClose(FtpSession ftpSession,FtpRequest ftpRequest) throws FtpCommandException {
 		
 	}
 	

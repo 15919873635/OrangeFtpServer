@@ -5,10 +5,11 @@ import java.util.List;
 
 import org.apache.commons.lang.StringUtils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.orange.ftpserver.command.CLOSE;
 import com.orange.ftpserver.command.OPEN;
 import com.orange.ftpserver.exception.FtpCommandException;
-import com.orange.ftpserver.util.FtpSessionUtil;
+import com.orange.ftpserver.obj.FtpTransferRequestObject;
 
 public class FtpRequestCommandParser {
 	
@@ -16,31 +17,29 @@ public class FtpRequestCommandParser {
 		return new FtpRequestCommandParser();
 	}
 	
-	public FtpRequestCommand parseCommand(String reciveMessage){
-		FtpRequestCommand recivedCommand = FtpRequestCommand.BLANK;
-		if(StringUtils.isNotBlank(reciveMessage) 
-				&& FtpSessionUtil.hasEOL(reciveMessage)){
-			String[] commandSplit = reciveMessage.trim().split(" ");
-			String commandName = "";
-			for(String command : commandSplit){
-				if(StringUtils.isNotBlank(command)){
-					commandName = command;break;
-				}
+	public FtpTransferRequestObject getRequestObject(String reciveMessage){
+		FtpTransferRequestObject requestObject = null;
+		if(StringUtils.isNotBlank(reciveMessage)){
+			JSONObject messageObject = JSONObject.parseObject(reciveMessage);
+			if(!messageObject.isEmpty()){
+				requestObject = JSONObject.toJavaObject(messageObject, FtpTransferRequestObject.class);
 			}
-			recivedCommand = FtpRequestCommand.nameOf(commandName);
+		}
+		return requestObject;
+	}
+	
+	public FtpRequestCommand parseCommand(FtpTransferRequestObject requestObject){
+		FtpRequestCommand recivedCommand = FtpRequestCommand.BLANK;
+		if(requestObject != null){
+			recivedCommand = FtpRequestCommand.nameOf(requestObject.getCommand());
 		}
 		return recivedCommand;
 	}
 	
-	public String[] parseParameters(String reciveMessage){
+	public String[] parseParameters(FtpTransferRequestObject requestObject){
 		List<String> parameterArray = new LinkedList<String>();
-		String[] commandSplit = reciveMessage.trim().split(" ");
-		int count = 0;
-		for(String command : commandSplit){
-			if(StringUtils.isNotBlank(command) && count == 1){
-				parameterArray.add(command);
-			}else
-				count += 1;
+		if(requestObject != null){
+			parameterArray.addAll(requestObject.getParameters());
 		}
 		if(parameterArray.size() > 0){
 			String[] parameters = new String[parameterArray.size()];
@@ -54,10 +53,10 @@ public class FtpRequestCommandParser {
 		return new String[0];
 	}
 	
-	public void excuteCommand(FtpSession session,String reciveMessage) 
+	public void excuteCommand(FtpSession session,FtpTransferRequestObject requestObject) 
 			throws FtpCommandException{
-		FtpRequestCommand recivedCommand = parseCommand(reciveMessage);
-		String[] parameters = parseParameters(reciveMessage);
+		FtpRequestCommand recivedCommand = parseCommand(requestObject);
+		String[] parameters = parseParameters(requestObject);
 		switch (recivedCommand) {
 		case OPEN:
 			OPEN open = new OPEN(session,parameters);
