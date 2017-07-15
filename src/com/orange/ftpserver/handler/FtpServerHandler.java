@@ -1,27 +1,22 @@
 package com.orange.ftpserver.handler;
 
 import org.apache.commons.lang.StringUtils;
+import org.jboss.netty.buffer.ChannelBuffer;
+import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.channel.MessageEvent;
 
 import com.orange.ftpserver.command.FtpRequestCommandDecoder;
-
-import io.netty.channel.ChannelHandlerContext;
 
 public class FtpServerHandler extends AbstractFtpHandler {
 	
 	@Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg)  
+	public void messageReceived(ChannelHandlerContext ctx, MessageEvent event)  
             throws Exception {
-		if(StringUtils.isNotBlank((String) msg)){
+		ChannelBuffer messageReceived = (ChannelBuffer) event.getMessage();  
+        String message = new String(messageReceived.array());
+		if(StringUtils.isNotBlank(message)){
 			FtpRequestCommandDecoder commandDecoder = FtpRequestCommandDecoder.defaultParser();
-			commandDecoder.excuteCommand(super.session,(String)msg);
+			commandDecoder.excuteCommand(super.session,message);
 		}
-	}
-	
-	@Override
-	public void channelReadComplete(ChannelHandlerContext ctx)
-			throws Exception
-	{
-		System.out.println("123456");
-		ctx.writeAndFlush(super.session.getResponse().getMessage());
 	}
 }

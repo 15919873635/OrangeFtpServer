@@ -1,44 +1,45 @@
 package com.orange.ftpserver.handler;
 
 import org.apache.log4j.Logger;
+import org.jboss.netty.channel.Channel;
+import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.channel.ChannelStateEvent;
+import org.jboss.netty.channel.ExceptionEvent;
+import org.jboss.netty.channel.SimpleChannelHandler;
 
 import com.orange.ftpserver.context.DefaultFtpSession;
 import com.orange.ftpserver.context.FtpSession;
 import com.orange.ftpserver.util.FtpSessionUtil;
 
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
-
-public abstract class AbstractFtpHandler extends ChannelInboundHandlerAdapter {
+public abstract class AbstractFtpHandler extends SimpleChannelHandler {
 
 	private static Logger logger = Logger.getLogger(AbstractFtpHandler.class);
 	
 	protected FtpSession session;
 	
 	@Override
-	public void channelActive(ChannelHandlerContext ctx) throws Exception
+	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
 	{
-		Channel channel = ctx.channel();
+		Channel channel = ctx.getChannel();
 		if(session == null){
-			String sessionId = channel.id().asLongText();
-			session = new DefaultFtpSession(sessionId);
-			FtpSessionUtil.putSession2Map(sessionId, session);
+			session = new DefaultFtpSession();
+			DefaultFtpSession ftpSession = (DefaultFtpSession)session;
+			ftpSession.initByChannel(channel);
 		}
 	}
 	
 	@Override
-	public void channelInactive(ChannelHandlerContext ctx) throws Exception
+	public void channelDisconnected(ChannelHandlerContext ctx,ChannelStateEvent e) throws Exception
 	{
-		Channel channel = ctx.channel();
-		FtpSessionUtil.deleteSession(channel.id().asLongText());
+		Channel channel = ctx.getChannel();
+		FtpSessionUtil.deleteSession(channel.getId());
 		session = null;
 	}
 	
 	@Override
-	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception
-	{
+	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent cause) throws Exception
+	{ 
 		System.out.println("error");
-		logger.error(cause.getMessage(), cause);
+		logger.error(cause.getCause().getMessage(), cause.getCause());
 	}
 }

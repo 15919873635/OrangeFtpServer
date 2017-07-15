@@ -1,21 +1,28 @@
 package com.orange.ftpserver.context;
 
 
+import org.jboss.netty.channel.Channel;
+
 import com.orange.ftpserver.command.FtpRequestCommand;
+import com.orange.ftpserver.util.FtpSessionUtil;
 
 public class DefaultFtpSession implements FtpSession {
 	
-	private String sessionId;
+	private Integer sessionId;
 	private FtpRequestCommand ftpCommand;
 	private FtpResponse ftpResponse;
 	
-	public DefaultFtpSession(String sessionId){
-		this.sessionId = sessionId;
+	public DefaultFtpSession(){
 		ftpResponse = new DefaultFtpResponse();
 	}
-
+	
+	public void initByChannel(Channel channel){
+		this.sessionId = channel.getId();
+		FtpSessionUtil.putSession2Map(sessionId, this);
+	}
+	
 	@Override
-	public String getSessionId() {
+	public Integer getSessionId() {
 		return sessionId;
 	}
 	
