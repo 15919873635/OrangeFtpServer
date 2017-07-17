@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.orange.ftpserver.exception.FtpCommandException;
 import com.orange.ftpserver.factory.DefaultServerFactory;
-import com.orange.ftpserver.listener.IFtpServerListener;
+import com.orange.ftpserver.listener.AbstractFtpServerListener;
 
 public abstract class AbstractFtpCommand implements IFtpCommand {
 	
@@ -39,9 +39,9 @@ public abstract class AbstractFtpCommand implements IFtpCommand {
 		return commandParameter;
 	}
 	
-	private void onCommand(Collection<IFtpServerListener> values) 
+	private void onCommand(Collection<AbstractFtpServerListener> values) 
 			throws FtpCommandException{
-		for(IFtpServerListener listener : values){
+		for(AbstractFtpServerListener listener : values){
 			switch (ftpCommand) {
 			case MKD:
 				listener.onMkdir(ftpSession);
@@ -63,13 +63,13 @@ public abstract class AbstractFtpCommand implements IFtpCommand {
 	}
 	
 	public void executCommand() throws FtpCommandException{
-		Map<String,IFtpServerListener> listenerMap = DefaultServerFactory.getFtpContext().getListenerMap();
-		Collection<IFtpServerListener> values = listenerMap.values();
-		for(IFtpServerListener listener : values){
+		Map<String,AbstractFtpServerListener> listenerMap = DefaultServerFactory.getFtpContext().getListenerMap();
+		Collection<AbstractFtpServerListener> values = listenerMap.values();
+		for(AbstractFtpServerListener listener : values){
 			listener.beforeCommond(ftpSession);
 		}
 		onCommand(values);
-		for(IFtpServerListener listener : values){
+		for(AbstractFtpServerListener listener : values){
 			listener.afterCommond(ftpSession);
 		}
 	}

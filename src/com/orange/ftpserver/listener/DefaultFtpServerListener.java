@@ -13,12 +13,7 @@ public final class DefaultFtpServerListener extends AbstractFtpServerListener{
 	public void beforeRmdir(IFtpSession ftpSession) throws FtpCommandException {
 		
 	}
-
-	@Override
-	public void onRmdir(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-
+	
 	@Override
 	public void afterRmdir(IFtpSession ftpSession) throws FtpCommandException {
 		
@@ -26,11 +21,6 @@ public final class DefaultFtpServerListener extends AbstractFtpServerListener{
 
 	@Override
 	public void beforeStore(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-
-	@Override
-	public void onStore(IFtpSession ftpSession) throws FtpCommandException {
 		
 	}
 
@@ -45,22 +35,12 @@ public final class DefaultFtpServerListener extends AbstractFtpServerListener{
 	}
 
 	@Override
-	public void onAppend(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-
-	@Override
 	public void afterAppend(IFtpSession ftpSession) throws FtpCommandException {
 		
 	}
 
 	@Override
 	public void beforeClose(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-
-	@Override
-	public void onClose(IFtpSession ftpSession) throws FtpCommandException {
 		
 	}
 
@@ -75,22 +55,12 @@ public final class DefaultFtpServerListener extends AbstractFtpServerListener{
 	}
 
 	@Override
-	public void onMkdir(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-
-	@Override
 	public void afterMkdir(IFtpSession ftpSession) throws FtpCommandException {
 		
 	}
 
 	@Override
 	public void beforeDelete(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-
-	@Override
-	public void onDelete(IFtpSession ftpSession) throws FtpCommandException {
 		
 	}
 

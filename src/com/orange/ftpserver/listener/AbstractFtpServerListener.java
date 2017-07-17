@@ -7,7 +7,19 @@ import com.orange.ftpserver.exception.FtpCommandException;
 
 public abstract class AbstractFtpServerListener implements IFtpServerListener {
 
-	@Override
+	public abstract void beforeRmdir(IFtpSession ftpSession) throws FtpCommandException;
+	public abstract void afterRmdir(IFtpSession ftpSession) throws FtpCommandException;
+	public abstract void beforeMkdir(IFtpSession ftpSession) throws FtpCommandException;
+	public abstract void afterMkdir(IFtpSession ftpSession) throws FtpCommandException;
+	public abstract void beforeStore(IFtpSession ftpSession) throws FtpCommandException;
+	public abstract void afterStore(IFtpSession ftpSession) throws FtpCommandException;
+	public abstract void beforeAppend(IFtpSession ftpSession) throws FtpCommandException;
+	public abstract void afterAppend(IFtpSession ftpSession) throws FtpCommandException;
+	public abstract void beforeDelete(IFtpSession ftpSession) throws FtpCommandException;
+	public abstract void afterDelete(IFtpSession ftpSession) throws FtpCommandException;
+	public abstract void beforeClose(IFtpSession ftpSession) throws FtpCommandException;
+	public abstract void afterClose(IFtpSession ftpSession) throws FtpCommandException;
+	
 	public CommandResult beforeCommond(IFtpSession ftpSession) throws FtpCommandException {
 		FtpRequestCommand command = ftpSession.getRequest().getFtpCommand().getCommand();
 		if(command.valueOf().equals(FtpRequestCommand.CWD.name())
@@ -22,13 +34,36 @@ public abstract class AbstractFtpServerListener implements IFtpServerListener {
 			if(!ftpSession.isLoggedIn())
 				return CommandResult.NeedLogin;
 			else
-				return CommandResult.Nomal;
+				return CommandResult.Default;
 		}else
-			return CommandResult.Nomal;
+			return CommandResult.Default;
 	}
 
-	@Override
 	public CommandResult afterCommond(IFtpSession ftpSession) throws FtpCommandException {
 		return CommandResult.NeedLogin;
+	}
+	
+	public void onRmdir(IFtpSession ftpSession) throws FtpCommandException {
+		
+	}
+	
+	public void onStore(IFtpSession ftpSession) throws FtpCommandException {
+		
+	}
+	
+	public void onMkdir(IFtpSession ftpSession) throws FtpCommandException {
+		
+	}
+	
+	public void onAppend(IFtpSession ftpSession) throws FtpCommandException {
+		
+	}
+	
+	public void onDelete(IFtpSession ftpSession) throws FtpCommandException {
+		
+	}
+	
+	public void onClose(IFtpSession ftpSession) throws FtpCommandException {
+		
 	}
 }

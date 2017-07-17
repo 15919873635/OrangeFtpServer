@@ -3,12 +3,12 @@ package com.orange.ftpserver.context;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.orange.ftpserver.listener.IFtpServerListener;
+import com.orange.ftpserver.listener.AbstractFtpServerListener;
 import com.orange.ftpserver.server.IFtpServer;
 import com.orange.ftpserver.user.IUserManager;
 
 public final class DefaultFtpContext implements IFtpContext {
-	private Map<String, IFtpServerListener> serverListenerMap =new HashMap<String,IFtpServerListener>();
+	private Map<String, AbstractFtpServerListener> serverListenerMap =new HashMap<String,AbstractFtpServerListener>();
 	private Map<String,IFtpSession> sessionMap = new HashMap<String,IFtpSession>();
 	private IUserManager userManager;
 	private IFtpServer ftpServer;
@@ -23,11 +23,11 @@ public final class DefaultFtpContext implements IFtpContext {
 	}
 	
 	@Override
-	public Map<String, IFtpServerListener> getListenerMap() {
+	public Map<String, AbstractFtpServerListener> getListenerMap() {
 		return serverListenerMap;
 	}
 	
-	public void setListenerMap(Map<String, IFtpServerListener> serverListenerMap){
+	public void setListenerMap(Map<String, AbstractFtpServerListener> serverListenerMap){
 		this.serverListenerMap = serverListenerMap;
 	}
 
