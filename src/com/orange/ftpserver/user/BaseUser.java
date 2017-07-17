@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.orange.ftpserver.author.Authority;
 
-public class BaseUser extends AbstractUser implements IFtpUser{
+public class BaseUser extends AbstractUser{
 	private String userName;
 	private String userPassword;
 	private String homedirectory;
