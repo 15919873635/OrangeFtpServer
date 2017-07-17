@@ -4,8 +4,8 @@ import java.util.Collection;
 import java.util.Map;
 
 import com.orange.ftpserver.exception.FtpCommandException;
-import com.orange.ftpserver.factory.DefaultServerFactory;
-import com.orange.ftpserver.listener.AbstractFtpServerListener;
+import com.orange.ftpserver.server.AbstractFtpServerListener;
+import com.orange.ftpserver.server.DefaultServerFactory;
 
 public abstract class AbstractFtpCommand implements IFtpCommand {
 	

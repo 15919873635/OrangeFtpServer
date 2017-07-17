@@ -1,4 +1,4 @@
-package com.orange.ftpserver.listener;
+package com.orange.ftpserver.server;
 
 import com.orange.ftpserver.context.CommandResult;
 import com.orange.ftpserver.context.FtpRequestCommand;

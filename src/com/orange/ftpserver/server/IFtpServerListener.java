@@ -1,4 +1,4 @@
-package com.orange.ftpserver.listener;
+package com.orange.ftpserver.server;
 
 public interface IFtpServerListener {
 	

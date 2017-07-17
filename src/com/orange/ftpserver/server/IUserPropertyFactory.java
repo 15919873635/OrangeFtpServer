@@ -1,4 +1,4 @@
-package com.orange.ftpserver.factory;
+package com.orange.ftpserver.server;
 
 import java.io.File;
 

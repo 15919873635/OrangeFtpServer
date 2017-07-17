@@ -8,8 +8,8 @@ import com.orange.ftpserver.context.DefaultFtpContext;
 import com.orange.ftpserver.context.DefaultFtpSession;
 import com.orange.ftpserver.context.FtpRequestCommandParser;
 import com.orange.ftpserver.context.IFtpSession;
-import com.orange.ftpserver.factory.DefaultServerFactory;
 import com.orange.ftpserver.obj.FtpTransferRequestObject;
+import com.orange.ftpserver.server.DefaultServerFactory;
 
 public final class FtpServerHandler extends AbstractFtpHandler {
 	protected IFtpSession session;

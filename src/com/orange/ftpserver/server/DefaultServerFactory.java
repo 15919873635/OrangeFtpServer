@@ -1,14 +1,10 @@
-package com.orange.ftpserver.factory;
+package com.orange.ftpserver.server;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import com.orange.ftpserver.context.DefaultFtpContext;
 import com.orange.ftpserver.context.IFtpContext;
-import com.orange.ftpserver.listener.AbstractFtpServerListener;
-import com.orange.ftpserver.listener.DefaultFtpServerListener;
-import com.orange.ftpserver.server.DefaultFtpServer;
-import com.orange.ftpserver.server.IFtpServer;
 import com.orange.ftpserver.user.DefaultUserManager;
 
 public final class DefaultServerFactory implements IFtpServerFactory{

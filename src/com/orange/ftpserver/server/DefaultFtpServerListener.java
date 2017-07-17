@@ -1,4 +1,4 @@
-package com.orange.ftpserver.listener;
+package com.orange.ftpserver.server;
 
 import org.apache.commons.lang.StringUtils;
 
@@ -7,7 +7,7 @@ import com.orange.ftpserver.context.DefaultFtpResponse;
 import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 
-public final class DefaultFtpServerListener extends AbstractFtpServerListener{
+final class DefaultFtpServerListener extends AbstractFtpServerListener{
 
 	@Override
 	public void beforeRmdir(IFtpSession ftpSession) throws FtpCommandException {
