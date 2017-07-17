@@ -1,4 +1,4 @@
-package com.orange.ftpserver.context;
+package com.orange.ftpserver.command;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -6,8 +6,9 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 
 import com.alibaba.fastjson.JSONObject;
-import com.orange.ftpserver.command.CLOSE;
-import com.orange.ftpserver.command.OPEN;
+import com.orange.ftpserver.command.impl.CLOSE;
+import com.orange.ftpserver.command.impl.OPEN;
+import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 import com.orange.ftpserver.obj.FtpTransferRequestObject;
 

@@ -1,4 +1,4 @@
-package com.orange.ftpserver.context;
+package com.orange.ftpserver.command;
 
 public enum FtpRequestCommand {
 	/** This command tells the server to abort the previous FTP service command and

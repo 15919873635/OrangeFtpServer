@@ -1,7 +1,7 @@
 package com.orange.ftpserver.server;
 
+import com.orange.ftpserver.command.FtpRequestCommand;
 import com.orange.ftpserver.context.CommandResult;
-import com.orange.ftpserver.context.FtpRequestCommand;
 import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 

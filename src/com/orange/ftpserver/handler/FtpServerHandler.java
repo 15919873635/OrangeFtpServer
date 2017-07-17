@@ -4,9 +4,9 @@ import org.apache.commons.lang.StringUtils;
 import org.jboss.netty.channel.ChannelHandlerContext;
 import org.jboss.netty.channel.MessageEvent;
 
+import com.orange.ftpserver.command.FtpRequestCommandParser;
 import com.orange.ftpserver.context.DefaultFtpContext;
 import com.orange.ftpserver.context.DefaultFtpSession;
-import com.orange.ftpserver.context.FtpRequestCommandParser;
 import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.obj.FtpTransferRequestObject;
 import com.orange.ftpserver.server.DefaultServerFactory;

@@ -1,5 +1,7 @@
 package com.orange.ftpserver.context;
 
+import com.orange.ftpserver.command.IFtpCommand;
+
 public final class DefaultFtpRequest implements IFtpRequest {
 	private IFtpSession ftpSession;
 	private IFtpCommand ftpCommand;

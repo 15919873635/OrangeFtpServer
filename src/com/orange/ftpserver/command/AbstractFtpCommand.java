@@ -1,8 +1,10 @@
-package com.orange.ftpserver.context;
+package com.orange.ftpserver.command;
 
 import java.util.Collection;
 import java.util.Map;
 
+import com.orange.ftpserver.context.DefaultFtpRequest;
+import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 import com.orange.ftpserver.server.AbstractFtpServerListener;
 import com.orange.ftpserver.server.DefaultServerFactory;
