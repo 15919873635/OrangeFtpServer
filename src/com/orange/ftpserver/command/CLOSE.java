@@ -1,10 +1,9 @@
 package com.orange.ftpserver.command;
 
 import com.orange.ftpserver.context.AbstractFtpCommand;
-import com.orange.ftpserver.context.DefaultFtpContext;
 import com.orange.ftpserver.context.FtpRequestCommand;
 import com.orange.ftpserver.context.FtpSession;
-import com.orange.ftpserver.factory.DefaultServerFactory;
+import com.orange.ftpserver.exception.FtpCommandException;
 
 public final class CLOSE extends AbstractFtpCommand{
 
@@ -13,9 +12,7 @@ public final class CLOSE extends AbstractFtpCommand{
 	}
 
 	@Override
-	public void exec() {
-		DefaultFtpContext ftpContext = (DefaultFtpContext)DefaultServerFactory.getFtpContext();
-		ftpContext.deleteSession(ftpSession.getSessionId());
-		super.ftpSession = null;
+	public void exec() throws FtpCommandException{
+		super.executCommand();
 	}
 }
