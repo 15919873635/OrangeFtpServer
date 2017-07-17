@@ -5,7 +5,7 @@ import com.orange.ftpserver.context.CommandResult;
 import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 
-public abstract class AbstractFtpServerListener implements IFtpServerListener {
+public abstract class AbstractFtpServerListener {
 
 	public abstract void beforeRmdir(IFtpSession ftpSession) throws FtpCommandException;
 	public abstract void afterRmdir(IFtpSession ftpSession) throws FtpCommandException;
