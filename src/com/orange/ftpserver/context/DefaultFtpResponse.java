@@ -5,13 +5,13 @@ import java.util.Date;
 import com.alibaba.fastjson.JSONObject;
 import com.orange.ftpserver.obj.FtpTransferResponseObject;
 
-public final class DefaultFtpResponse implements FtpResponse {
+public final class DefaultFtpResponse implements IFtpResponse {
 	
-	private FtpSession ftpSession;
+	private IFtpSession ftpSession;
 	
 	private int code;
 	
-	public DefaultFtpResponse(FtpSession ftpSession){
+	public DefaultFtpResponse(IFtpSession ftpSession){
 		this.code = 0;
 		this.ftpSession = ftpSession;
 	}
@@ -57,7 +57,7 @@ public final class DefaultFtpResponse implements FtpResponse {
 	}
 
 	@Override
-	public FtpSession getSession() {
+	public IFtpSession getSession() {
 		return ftpSession;
 	}
 }

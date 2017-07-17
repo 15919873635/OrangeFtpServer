@@ -1,6 +1,6 @@
 package com.orange.ftpserver.exception;
 
-public final class FtpCommandException extends Exception implements FtpException{
+public final class FtpCommandException extends Exception implements IFtpException{
 
 	/**
 	 * 

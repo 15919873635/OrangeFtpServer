@@ -7,12 +7,12 @@ import org.jboss.netty.channel.MessageEvent;
 import com.orange.ftpserver.context.DefaultFtpContext;
 import com.orange.ftpserver.context.DefaultFtpSession;
 import com.orange.ftpserver.context.FtpRequestCommandParser;
-import com.orange.ftpserver.context.FtpSession;
+import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.factory.DefaultServerFactory;
 import com.orange.ftpserver.obj.FtpTransferRequestObject;
 
 public final class FtpServerHandler extends AbstractFtpHandler {
-	protected FtpSession session;
+	protected IFtpSession session;
 	protected FtpRequestCommandParser commandDecoder = FtpRequestCommandParser.defaultParser();
 	
 	@Override

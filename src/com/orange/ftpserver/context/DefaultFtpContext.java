@@ -3,50 +3,50 @@ package com.orange.ftpserver.context;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.orange.ftpserver.listener.FtpServerListener;
-import com.orange.ftpserver.server.FtpServer;
-import com.orange.ftpserver.user.UserManager;
+import com.orange.ftpserver.listener.IFtpServerListener;
+import com.orange.ftpserver.server.IFtpServer;
+import com.orange.ftpserver.user.IUserManager;
 
-public final class DefaultFtpContext implements FtpContext {
-	private Map<String, FtpServerListener> serverListenerMap =new HashMap<String,FtpServerListener>();
-	private Map<String,FtpSession> sessionMap = new HashMap<String,FtpSession>();
-	private UserManager userManager;
-	private FtpServer ftpServer;
+public final class DefaultFtpContext implements IFtpContext {
+	private Map<String, IFtpServerListener> serverListenerMap =new HashMap<String,IFtpServerListener>();
+	private Map<String,IFtpSession> sessionMap = new HashMap<String,IFtpSession>();
+	private IUserManager userManager;
+	private IFtpServer ftpServer;
 	
 	@Override
-	public UserManager getUserManager() {
+	public IUserManager getUserManager() {
 		return userManager;
 	}
 	
-	public void setUserManager(UserManager userManager){
+	public void setUserManager(IUserManager userManager){
 		this.userManager = userManager;
 	}
 	
 	@Override
-	public Map<String, FtpServerListener> getListenerMap() {
+	public Map<String, IFtpServerListener> getListenerMap() {
 		return serverListenerMap;
 	}
 	
-	public void setListenerMap(Map<String, FtpServerListener> serverListenerMap){
+	public void setListenerMap(Map<String, IFtpServerListener> serverListenerMap){
 		this.serverListenerMap = serverListenerMap;
 	}
 
 	@Override
-	public FtpServer getFtpServer() {
+	public IFtpServer getFtpServer() {
 		return ftpServer;
 	}
 	
-	public void setFtpServer(FtpServer ftpServer){
+	public void setFtpServer(IFtpServer ftpServer){
 		this.ftpServer = ftpServer;
 	}
 	
-	public synchronized void putSession2Map(String sessionId,FtpSession ftpSession){
+	public synchronized void putSession2Map(String sessionId,IFtpSession ftpSession){
 		if(!sessionMap.keySet().contains(sessionId)){
 			sessionMap.put(sessionId, ftpSession);
 		}
 	}
 	
-	public FtpSession getSession(String sessionId){
+	public IFtpSession getSession(String sessionId){
 		if(sessionMap != null)
 			return sessionMap.get(sessionId);
 		else

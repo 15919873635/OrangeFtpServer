@@ -1,13 +1,13 @@
 package com.orange.ftpserver.context;
 
-import com.orange.ftpserver.user.FtpUser;
+import com.orange.ftpserver.user.IFtpUser;
 
-public final class DefaultFtpSession implements FtpSession {
+public final class DefaultFtpSession implements IFtpSession {
 	
 	private String sessionId;
-	private FtpRequest ftpRequest;
-	private FtpResponse ftpResponse;
-	private FtpUser ftpUser;
+	private IFtpRequest ftpRequest;
+	private IFtpResponse ftpResponse;
+	private IFtpUser ftpUser;
 	private boolean isLoggedIn;
 	private boolean isSecure;
 	
@@ -26,7 +26,7 @@ public final class DefaultFtpSession implements FtpSession {
 	}
 
 	@Override
-	public FtpResponse getResponse() {
+	public IFtpResponse getResponse() {
 		return ftpResponse;
 	}
 
@@ -45,16 +45,16 @@ public final class DefaultFtpSession implements FtpSession {
 	}
 
 	@Override
-	public FtpRequest getRequest() {
+	public IFtpRequest getRequest() {
 		return ftpRequest;
 	}
 	
-	public void setUser(FtpUser ftpUser){
+	public void setUser(IFtpUser ftpUser){
 		this.ftpUser = ftpUser;
 	}
 	
 	@Override
-	public FtpUser getUser() {
+	public IFtpUser getUser() {
 		isLoggedIn = true;
 		return ftpUser;
 	}

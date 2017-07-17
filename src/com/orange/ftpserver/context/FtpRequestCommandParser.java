@@ -53,7 +53,7 @@ public final class FtpRequestCommandParser {
 		return new String[0];
 	}
 	
-	public void excuteCommand(FtpSession session,FtpTransferRequestObject requestObject) 
+	public void excuteCommand(IFtpSession session,FtpTransferRequestObject requestObject) 
 			throws FtpCommandException{
 		FtpRequestCommand recivedCommand = parseCommand(requestObject);
 		String[] parameters = parseParameters(requestObject);

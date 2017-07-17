@@ -4,37 +4,37 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.orange.ftpserver.context.DefaultFtpContext;
-import com.orange.ftpserver.context.FtpContext;
+import com.orange.ftpserver.context.IFtpContext;
 import com.orange.ftpserver.listener.DefaultFtpServerListener;
-import com.orange.ftpserver.listener.FtpServerListener;
+import com.orange.ftpserver.listener.IFtpServerListener;
 import com.orange.ftpserver.server.DefaultFtpServer;
-import com.orange.ftpserver.server.FtpServer;
+import com.orange.ftpserver.server.IFtpServer;
 import com.orange.ftpserver.user.DefaultUserManager;
 
-public final class DefaultServerFactory implements FtpServerFactory{
+public final class DefaultServerFactory implements IFtpServerFactory{
 	private static DefaultFtpContext ftpContext = new DefaultFtpContext();;
 	
 	public DefaultServerFactory(){
-		Map<String,FtpServerListener> defaultListenerMap = createListenerMap();
+		Map<String,IFtpServerListener> defaultListenerMap = createListenerMap();
 		ftpContext.setListenerMap(defaultListenerMap);
 		ftpContext.setUserManager(new DefaultUserManager());
 	}
 	
 	@Override
-	public FtpServer createServer() {
-		FtpServer ftpServer = new DefaultFtpServer();
+	public IFtpServer createServer() {
+		IFtpServer ftpServer = new DefaultFtpServer();
 		ftpContext.setFtpServer(ftpServer);
 		return ftpServer;
 	}
 	
-	private Map<String,FtpServerListener> createListenerMap(){
-		Map<String,FtpServerListener> listenerMap = new HashMap<String,FtpServerListener>();
-		FtpServerListener defaultServerListener = new DefaultFtpServerListener();
+	private Map<String,IFtpServerListener> createListenerMap(){
+		Map<String,IFtpServerListener> listenerMap = new HashMap<String,IFtpServerListener>();
+		IFtpServerListener defaultServerListener = new DefaultFtpServerListener();
 		listenerMap.put("default", defaultServerListener);
 		return listenerMap;
 	}
 
-	public static FtpContext getFtpContext() {
+	public static IFtpContext getFtpContext() {
 		return ftpContext;
 	}
 }

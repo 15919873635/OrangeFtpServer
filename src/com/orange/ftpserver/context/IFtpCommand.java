@@ -1,7 +1,7 @@
 package com.orange.ftpserver.context;
 
-public interface FtpCommand {
-	FtpSession getSession();
+public interface IFtpCommand {
+	IFtpSession getSession();
 	FtpRequestCommand getCommand();
 	String[] getParameters();
 }

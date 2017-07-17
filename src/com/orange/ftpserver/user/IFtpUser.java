@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.orange.ftpserver.author.Authority;
 
-public interface FtpUser {
+public interface IFtpUser {
 	public String getUserName();
 	public String getUserPassword();
 	public String getHomedirectory();

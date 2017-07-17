@@ -2,13 +2,13 @@ package com.orange.ftpserver.listener;
 
 import com.orange.ftpserver.context.CommandResult;
 import com.orange.ftpserver.context.FtpRequestCommand;
-import com.orange.ftpserver.context.FtpSession;
+import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 
-public abstract class AbstractFtpServerListener implements FtpServerListener {
+public abstract class AbstractFtpServerListener implements IFtpServerListener {
 
 	@Override
-	public CommandResult beforeCommond(FtpSession ftpSession) throws FtpCommandException {
+	public CommandResult beforeCommond(IFtpSession ftpSession) throws FtpCommandException {
 		FtpRequestCommand command = ftpSession.getRequest().getFtpCommand().getCommand();
 		if(command.valueOf().equals(FtpRequestCommand.CWD.name())
 				|| command.valueOf().equals(FtpRequestCommand.CDUP.name())
@@ -28,7 +28,7 @@ public abstract class AbstractFtpServerListener implements FtpServerListener {
 	}
 
 	@Override
-	public CommandResult afterCommond(FtpSession ftpSession) throws FtpCommandException {
+	public CommandResult afterCommond(IFtpSession ftpSession) throws FtpCommandException {
 		return CommandResult.NeedLogin;
 	}
 }

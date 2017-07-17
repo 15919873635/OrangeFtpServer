@@ -15,7 +15,7 @@ import org.jboss.netty.handler.codec.string.StringEncoder;
 import com.orange.ftpserver.handler.FtpServerHandler;
 
 
-public final class DefaultFtpServer implements FtpServer {
+public final class DefaultFtpServer implements IFtpServer {
 	
 	private ExecutorService bossGroup;
 	private ExecutorService workerGroup;
@@ -23,7 +23,6 @@ public final class DefaultFtpServer implements FtpServer {
 	
 	public DefaultFtpServer(){
 		serverPort = 21;
-		
 	}
 	
 	public DefaultFtpServer(int serverPort){

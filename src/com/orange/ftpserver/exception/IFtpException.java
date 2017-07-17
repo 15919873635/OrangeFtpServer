@@ -1,5 +1,5 @@
 package com.orange.ftpserver.exception;
 
-public interface FtpException {
+public interface IFtpException {
 
 }

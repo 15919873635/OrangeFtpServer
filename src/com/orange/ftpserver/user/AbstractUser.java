@@ -1,5 +1,5 @@
 package com.orange.ftpserver.user;
 
-public abstract class AbstractUser implements FtpUser{
+public abstract class AbstractUser implements IFtpUser{
 	
 }

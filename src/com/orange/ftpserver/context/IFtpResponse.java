@@ -1,8 +1,8 @@
 package com.orange.ftpserver.context;
 
-public interface FtpResponse {
+public interface IFtpResponse {
 	
-	FtpSession getSession();
+	IFtpSession getSession();
 	
     /**
      * The reply code

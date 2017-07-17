@@ -5,16 +5,16 @@ import java.util.Map;
 
 import com.orange.ftpserver.exception.FtpCommandException;
 import com.orange.ftpserver.factory.DefaultServerFactory;
-import com.orange.ftpserver.listener.FtpServerListener;
+import com.orange.ftpserver.listener.IFtpServerListener;
 
-public abstract class AbstractFtpCommand implements FtpCommand {
+public abstract class AbstractFtpCommand implements IFtpCommand {
 	
-	protected FtpSession ftpSession;
+	protected IFtpSession ftpSession;
 	
 	protected FtpRequestCommand ftpCommand;
 	protected String[] commandParameter;
 
-	protected AbstractFtpCommand(FtpSession ftpSession,FtpRequestCommand ftpCommand,String[] parameters){
+	protected AbstractFtpCommand(IFtpSession ftpSession,FtpRequestCommand ftpCommand,String[] parameters){
 		this.ftpSession = ftpSession;
 		this.ftpCommand = ftpCommand;
 		this.commandParameter = parameters;
@@ -25,7 +25,7 @@ public abstract class AbstractFtpCommand implements FtpCommand {
 	protected abstract void exec() throws Exception;
 	
 	@Override
-	public FtpSession getSession(){
+	public IFtpSession getSession(){
 		return ftpSession;
 	}
 	
@@ -39,9 +39,9 @@ public abstract class AbstractFtpCommand implements FtpCommand {
 		return commandParameter;
 	}
 	
-	private void onCommand(Collection<FtpServerListener> values) 
+	private void onCommand(Collection<IFtpServerListener> values) 
 			throws FtpCommandException{
-		for(FtpServerListener listener : values){
+		for(IFtpServerListener listener : values){
 			switch (ftpCommand) {
 			case MKD:
 				listener.onMkdir(ftpSession);
@@ -63,13 +63,13 @@ public abstract class AbstractFtpCommand implements FtpCommand {
 	}
 	
 	public void executCommand() throws FtpCommandException{
-		Map<String,FtpServerListener> listenerMap = DefaultServerFactory.getFtpContext().getListenerMap();
-		Collection<FtpServerListener> values = listenerMap.values();
-		for(FtpServerListener listener : values){
+		Map<String,IFtpServerListener> listenerMap = DefaultServerFactory.getFtpContext().getListenerMap();
+		Collection<IFtpServerListener> values = listenerMap.values();
+		for(IFtpServerListener listener : values){
 			listener.beforeCommond(ftpSession);
 		}
 		onCommand(values);
-		for(FtpServerListener listener : values){
+		for(IFtpServerListener listener : values){
 			listener.afterCommond(ftpSession);
 		}
 	}
