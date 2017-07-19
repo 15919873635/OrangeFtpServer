@@ -3,7 +3,7 @@ package com.orange.ftpserver.context;
 public class DefaultFtpStaticData implements IFtpStaticData {
 	private IFtpSession ftpSession;
 	/**
-	 * 当前工作区
+	 * 当前工作路径
 	 */
 	private String currentWorkPath;
 	
