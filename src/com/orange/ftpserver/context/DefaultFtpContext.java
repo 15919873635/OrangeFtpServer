@@ -31,7 +31,6 @@ public final class DefaultFtpContext implements IFtpContext {
 		this.serverListenerMap = serverListenerMap;
 	}
 
-	@Override
 	public IFtpServer getFtpServer() {
 		return ftpServer;
 	}
