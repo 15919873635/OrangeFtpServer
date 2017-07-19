@@ -10,7 +10,7 @@ import com.orange.ftpserver.exception.FtpCommandException;
 
 class FtpOnCommand {
 
-	public void beforeCommond(IFtpSession ftpSession) 
+	protected void beforeCommond(IFtpSession ftpSession) 
 			throws FtpCommandException {
 		CommandResult commandResult = checkLoginIn(ftpSession);
 		if(commandResult.name().equals(CommandResult.Default.name())){
@@ -18,7 +18,7 @@ class FtpOnCommand {
 		}
 	}
 
-	public void afterCommond(IFtpSession ftpSession) 
+	protected void afterCommond(IFtpSession ftpSession) 
 			throws FtpCommandException {
 		setResponseCode(ftpSession);
 	}

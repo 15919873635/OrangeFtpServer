@@ -4,6 +4,7 @@ import com.orange.ftpserver.user.IFtpUser;
 
 public final class DefaultFtpSession implements IFtpSession {
 	
+	private IFtpContext ftpContext;
 	private String sessionId;
 	private IFtpRequest ftpRequest;
 	private IFtpResponse ftpResponse;
@@ -11,11 +12,16 @@ public final class DefaultFtpSession implements IFtpSession {
 	private boolean isLoggedIn;
 	private boolean isSecure;
 	
-	public DefaultFtpSession(){
+	public DefaultFtpSession(IFtpContext ftpContext){
+		this.ftpContext = ftpContext;
 		ftpRequest = new DefaultFtpRequest(this);
 		ftpResponse = new DefaultFtpResponse(this);
 	}
 	
+	public IFtpContext getFtpContext() {
+		return ftpContext;
+	}
+
 	public void setSessionId(String sessionId){
 		this.sessionId = sessionId;
 	}

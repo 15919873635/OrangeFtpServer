@@ -12,6 +12,7 @@ import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.jboss.netty.handler.codec.string.StringDecoder;
 import org.jboss.netty.handler.codec.string.StringEncoder;
 
+import com.orange.ftpserver.context.IFtpContext;
 import com.orange.ftpserver.handler.FtpServerHandler;
 
 
@@ -20,12 +21,15 @@ public final class DefaultFtpServer implements IFtpServer {
 	private ExecutorService bossGroup;
 	private ExecutorService workerGroup;
 	private int serverPort;
+	private IFtpContext ftpContext;
 	
-	public DefaultFtpServer(){
+	public DefaultFtpServer(IFtpContext ftpContext){
+		this.ftpContext = ftpContext;
 		serverPort = 21;
 	}
 	
-	public DefaultFtpServer(int serverPort){
+	public DefaultFtpServer(IFtpContext ftpContext,int serverPort){
+		this.ftpContext = ftpContext;
 		this.serverPort = serverPort;
 	}
 	
@@ -42,7 +46,7 @@ public final class DefaultFtpServer implements IFtpServer {
                 ChannelPipeline pipeline = Channels.pipeline();  
                 pipeline.addLast("stringDecoder", new StringDecoder());
                 pipeline.addLast("stringEncoder", new StringEncoder());
-                pipeline.addLast("ftpServerHandler", new FtpServerHandler());  
+                pipeline.addLast("ftpServerHandler", new FtpServerHandler(ftpContext));  
                 return pipeline;  
             }  
         });  

@@ -8,7 +8,7 @@ import com.orange.ftpserver.context.IFtpContext;
 import com.orange.ftpserver.user.DefaultUserManager;
 
 public final class DefaultServerFactory implements IFtpServerFactory{
-	private static DefaultFtpContext ftpContext = new DefaultFtpContext();;
+	private DefaultFtpContext ftpContext = new DefaultFtpContext();;
 	
 	public DefaultServerFactory(){
 		Map<String,AbstractFtpServerListener> defaultListenerMap = createListenerMap();
@@ -18,7 +18,7 @@ public final class DefaultServerFactory implements IFtpServerFactory{
 	
 	@Override
 	public IFtpServer createServer() {
-		IFtpServer ftpServer = new DefaultFtpServer();
+		IFtpServer ftpServer = new DefaultFtpServer(ftpContext);
 		ftpContext.setFtpServer(ftpServer);
 		return ftpServer;
 	}
@@ -30,7 +30,7 @@ public final class DefaultServerFactory implements IFtpServerFactory{
 		return listenerMap;
 	}
 
-	public static IFtpContext getFtpContext() {
+	public IFtpContext getFtpContext() {
 		return ftpContext;
 	}
 }

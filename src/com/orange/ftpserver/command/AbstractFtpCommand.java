@@ -7,7 +7,6 @@ import com.orange.ftpserver.context.DefaultFtpRequest;
 import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 import com.orange.ftpserver.server.AbstractFtpServerListener;
-import com.orange.ftpserver.server.DefaultServerFactory;
 
 public abstract class AbstractFtpCommand extends FtpOnCommand implements IFtpCommand {
 	
@@ -108,8 +107,8 @@ public abstract class AbstractFtpCommand extends FtpOnCommand implements IFtpCom
 		}
 	}
 	
-	public void executCommand() throws FtpCommandException{
-		Map<String,AbstractFtpServerListener> listenerMap = DefaultServerFactory.getFtpContext().getListenerMap();
+	protected void executCommand() throws FtpCommandException{
+		Map<String,AbstractFtpServerListener> listenerMap = ftpSession.getFtpContext().getListenerMap();
 		Collection<AbstractFtpServerListener> values = listenerMap.values();
 		super.beforeCommond(ftpSession);
 		beforeCommand(values);
