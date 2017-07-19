@@ -41,6 +41,28 @@ public abstract class AbstractFtpCommand extends FtpOnCommand implements IFtpCom
 		return commandParameter;
 	}
 	
+	private void beforeCommand(Collection<AbstractFtpServerListener> values) 
+			throws FtpCommandException{
+		for(AbstractFtpServerListener serverListener : values){
+			switch (ftpCommand) {
+				case MKD:
+					serverListener.beforeMkdir(ftpSession);
+					break;
+				case RMD:
+					serverListener.beforeRmdir(ftpSession);
+					break;
+				case STOR:
+					serverListener.beforeStore(ftpSession);
+					break;
+				case DELE:
+					serverListener.beforeDelete(ftpSession);
+					break;
+				default:
+					break;
+			}
+		}
+	}
+	
 	private void onCommand() 
 			throws FtpCommandException{
 		switch (ftpCommand) {
@@ -64,15 +86,35 @@ public abstract class AbstractFtpCommand extends FtpOnCommand implements IFtpCom
 		}
 	}
 	
+	private void afterCommand(Collection<AbstractFtpServerListener> values) 
+			throws FtpCommandException{
+		for(AbstractFtpServerListener serverListener : values){
+			switch (ftpCommand) {
+				case MKD:
+					serverListener.afterMkdir(ftpSession);
+					break;
+				case RMD:
+					serverListener.afterRmdir(ftpSession);
+					break;
+				case STOR:
+					serverListener.afterStore(ftpSession);
+					break;
+				case DELE:
+					serverListener.afterDelete(ftpSession);
+					break;
+				default:
+					break;
+			}
+		}
+	}
+	
 	public void executCommand() throws FtpCommandException{
 		Map<String,AbstractFtpServerListener> listenerMap = DefaultServerFactory.getFtpContext().getListenerMap();
 		Collection<AbstractFtpServerListener> values = listenerMap.values();
-		for(AbstractFtpServerListener listener : values){
-			listener.beforeCommond(ftpSession);
-		}
+		super.beforeCommond(ftpSession);
+		beforeCommand(values);
 		onCommand();
-		for(AbstractFtpServerListener listener : values){
-			listener.afterCommond(ftpSession);
-		}
+		afterCommand(values);
+		super.afterCommond(ftpSession);
 	}
 }
