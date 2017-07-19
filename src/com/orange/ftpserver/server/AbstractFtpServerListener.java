@@ -42,28 +42,4 @@ public abstract class AbstractFtpServerListener {
 	public CommandResult afterCommond(IFtpSession ftpSession) throws FtpCommandException {
 		return CommandResult.NeedLogin;
 	}
-	
-	public void onRmdir(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-	
-	public void onStore(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-	
-	public void onMkdir(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-	
-	public void onAppend(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-	
-	public void onDelete(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-	
-	public void onClose(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
 }

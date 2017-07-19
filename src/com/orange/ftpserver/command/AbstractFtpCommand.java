@@ -9,7 +9,7 @@ import com.orange.ftpserver.exception.FtpCommandException;
 import com.orange.ftpserver.server.AbstractFtpServerListener;
 import com.orange.ftpserver.server.DefaultServerFactory;
 
-public abstract class AbstractFtpCommand implements IFtpCommand {
+public abstract class AbstractFtpCommand extends FtpOnCommand implements IFtpCommand {
 	
 	protected IFtpSession ftpSession;
 	
@@ -41,26 +41,23 @@ public abstract class AbstractFtpCommand implements IFtpCommand {
 		return commandParameter;
 	}
 	
-	private void onCommand(Collection<AbstractFtpServerListener> values) 
+	private void onCommand() 
 			throws FtpCommandException{
-		for(AbstractFtpServerListener listener : values){
-			switch (ftpCommand) {
+		switch (ftpCommand) {
 			case MKD:
-				listener.onMkdir(ftpSession);
+				super.onMkdir(ftpSession);
 				break;
 			case RMD:
-				listener.onRmdir(ftpSession);
+				super.onRmdir(ftpSession);
 				break;
 			case STOR:
-				listener.onStore(ftpSession);
+				super.onStore(ftpSession);
 				break;
 			case DELE:
-				listener.onDelete(ftpSession);
+				super.onDelete(ftpSession);
 				break;
 			default:
 				break;
-			}
-			
 		}
 	}
 	
@@ -70,7 +67,7 @@ public abstract class AbstractFtpCommand implements IFtpCommand {
 		for(AbstractFtpServerListener listener : values){
 			listener.beforeCommond(ftpSession);
 		}
-		onCommand(values);
+		onCommand();
 		for(AbstractFtpServerListener listener : values){
 			listener.afterCommond(ftpSession);
 		}
