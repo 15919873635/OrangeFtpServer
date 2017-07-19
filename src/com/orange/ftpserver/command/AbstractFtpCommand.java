@@ -56,6 +56,10 @@ public abstract class AbstractFtpCommand extends FtpOnCommand implements IFtpCom
 				case DELE:
 					serverListener.beforeDelete(ftpSession);
 					break;
+				case QUIT:
+				case CLOSE:
+					serverListener.beforeClose(ftpSession);
+					break;
 				default:
 					break;
 			}
@@ -80,6 +84,10 @@ public abstract class AbstractFtpCommand extends FtpOnCommand implements IFtpCom
 			case DELE:
 				super.onDelete(ftpSession);
 				break;
+			case QUIT:
+			case CLOSE:
+				super.onClose(ftpSession);
+				break;
 			default:
 				break;
 		}
@@ -100,6 +108,10 @@ public abstract class AbstractFtpCommand extends FtpOnCommand implements IFtpCom
 					break;
 				case DELE:
 					serverListener.afterDelete(ftpSession);
+					break;
+				case QUIT:
+				case CLOSE:
+					serverListener.afterClose(ftpSession);
 					break;
 				default:
 					break;
