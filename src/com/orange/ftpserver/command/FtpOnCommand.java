@@ -5,6 +5,10 @@ import com.orange.ftpserver.exception.FtpCommandException;
 
 class FtpOnCommand {
 	
+	public void onOpen(IFtpSession ftpSession) throws FtpCommandException {
+		
+	}
+	
 	public void onRmdir(IFtpSession ftpSession) throws FtpCommandException {
 		
 	}

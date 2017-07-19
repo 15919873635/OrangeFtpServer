@@ -1,7 +1,12 @@
 package com.orange.ftpserver.server;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.orange.ftpserver.command.FtpRequestCommand;
+import com.orange.ftpserver.command.IFtpCommand;
+import com.orange.ftpserver.consts.ServerConstant;
 import com.orange.ftpserver.context.CommandResult;
+import com.orange.ftpserver.context.DefaultFtpResponse;
 import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 
@@ -20,7 +25,22 @@ public abstract class AbstractFtpServerListener {
 	public abstract void beforeClose(IFtpSession ftpSession) throws FtpCommandException;
 	public abstract void afterClose(IFtpSession ftpSession) throws FtpCommandException;
 	
-	public CommandResult beforeCommond(IFtpSession ftpSession) throws FtpCommandException {
+	public CommandResult beforeCommond(IFtpSession ftpSession) 
+			throws FtpCommandException {
+		CommandResult commandResult = checkLoginIn(ftpSession);
+		if(commandResult.name().equals(CommandResult.Default.name())){
+			commandResult = checkparameters(ftpSession);
+		}
+		return commandResult;
+	}
+
+	public CommandResult afterCommond(IFtpSession ftpSession) 
+			throws FtpCommandException {
+		return CommandResult.Default;
+	}
+	
+	private CommandResult checkLoginIn(IFtpSession ftpSession) 
+			throws FtpCommandException{
 		FtpRequestCommand command = ftpSession.getRequest().getFtpCommand().getCommand();
 		if(command.valueOf().equals(FtpRequestCommand.CWD.name())
 				|| command.valueOf().equals(FtpRequestCommand.CDUP.name())
@@ -32,14 +52,32 @@ public abstract class AbstractFtpServerListener {
 				|| command.valueOf().equals(FtpRequestCommand.RMD.name()))
 		{
 			if(!ftpSession.isLoggedIn())
-				return CommandResult.NeedLogin;
-			else
-				return CommandResult.Default;
-		}else
-			return CommandResult.Default;
+				throw new FtpCommandException("501");
+		}
+		return CommandResult.Default;
 	}
-
-	public CommandResult afterCommond(IFtpSession ftpSession) throws FtpCommandException {
-		return CommandResult.NeedLogin;
+	
+	private CommandResult checkparameters(IFtpSession ftpSession) 
+			throws FtpCommandException{
+		IFtpCommand command = ftpSession.getRequest().getFtpCommand();
+		if(command.getCommand().valueOf().equals(FtpRequestCommand.OPEN.name())){
+			String[] parameters = command.getParameters();
+			if(parameters.length == 1){
+				String address = parameters[0];
+				if(address.contains(":")){
+					String[] addSplit = address.split(":");
+					if(addSplit.length == 2
+							&& addSplit[0].matches(ServerConstant.IP_VERIFICATION)
+							&& StringUtils.isNumeric(addSplit[1])){
+						DefaultFtpResponse ftpResponse = (DefaultFtpResponse)ftpSession.getResponse();
+						ftpResponse.setCode(220);
+					} else
+						throw new FtpCommandException("501");
+				} else
+					throw new FtpCommandException("501");
+			} else
+				throw new FtpCommandException("501");
+		}
+		return CommandResult.Default;
 	}
 }

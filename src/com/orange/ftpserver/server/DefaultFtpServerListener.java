@@ -1,9 +1,5 @@
 package com.orange.ftpserver.server;
 
-import org.apache.commons.lang.StringUtils;
-
-import com.orange.ftpserver.consts.ServerConstant;
-import com.orange.ftpserver.context.DefaultFtpResponse;
 import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 
@@ -69,22 +65,4 @@ final class DefaultFtpServerListener extends AbstractFtpServerListener{
 		
 	}
 	
-	public void onOpen(IFtpSession ftpSession) throws FtpCommandException {
-		String[] parameters = ftpSession.getRequest().getFtpCommand().getParameters();
-		if(parameters.length == 1){
-			String address = parameters[0];
-			if(address.contains(":")){
-				String[] addSplit = address.split(":");
-				if(addSplit.length == 2
-						&& addSplit[0].matches(ServerConstant.IP_VERIFICATION)
-						&& StringUtils.isNumeric(addSplit[1])){
-					DefaultFtpResponse ftpResponse = (DefaultFtpResponse)ftpSession.getResponse();
-					ftpResponse.setCode(220);
-				} else
-					throw new FtpCommandException("501");
-			} else
-				throw new FtpCommandException("501");
-		} else
-			throw new FtpCommandException("501");
-	}
 }
