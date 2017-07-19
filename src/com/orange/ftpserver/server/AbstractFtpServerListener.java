@@ -65,11 +65,9 @@ public abstract class AbstractFtpServerListener {
 				String address = parameters[0];
 				if(address.contains(":")){
 					String[] addSplit = address.split(":");
-					if(addSplit.length == 2
-							&& addSplit[0].matches(ServerConstant.IP_VERIFICATION)
-							&& StringUtils.isNumeric(addSplit[1])){
-						
-					} else
+					if(addSplit.length != 2
+							|| !addSplit[0].matches(ServerConstant.IP_VERIFICATION)
+							|| !StringUtils.isNumeric(addSplit[1]))
 						throw new FtpCommandException("501");
 				} else
 					throw new FtpCommandException("501");
