@@ -1,7 +1,4 @@
-package com.orange.ftpserver.server;
-
-import com.orange.ftpserver.user.BaseUser;
-import com.orange.ftpserver.user.IFtpUser;
+package com.orange.ftpserver.user;
 
 public class DefaultUserFactory implements IUserFactory {
 
