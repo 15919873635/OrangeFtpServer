@@ -25,18 +25,17 @@ public abstract class AbstractFtpServerListener {
 	public abstract void beforeClose(IFtpSession ftpSession) throws FtpCommandException;
 	public abstract void afterClose(IFtpSession ftpSession) throws FtpCommandException;
 	
-	public CommandResult beforeCommond(IFtpSession ftpSession) 
+	public void beforeCommond(IFtpSession ftpSession) 
 			throws FtpCommandException {
 		CommandResult commandResult = checkLoginIn(ftpSession);
 		if(commandResult.name().equals(CommandResult.Default.name())){
 			commandResult = checkparameters(ftpSession);
 		}
-		return commandResult;
 	}
 
-	public CommandResult afterCommond(IFtpSession ftpSession) 
+	public void afterCommond(IFtpSession ftpSession) 
 			throws FtpCommandException {
-		return CommandResult.Default;
+		setResponseCode(ftpSession);
 	}
 	
 	private CommandResult checkLoginIn(IFtpSession ftpSession) 
@@ -69,8 +68,7 @@ public abstract class AbstractFtpServerListener {
 					if(addSplit.length == 2
 							&& addSplit[0].matches(ServerConstant.IP_VERIFICATION)
 							&& StringUtils.isNumeric(addSplit[1])){
-						DefaultFtpResponse ftpResponse = (DefaultFtpResponse)ftpSession.getResponse();
-						ftpResponse.setCode(220);
+						
 					} else
 						throw new FtpCommandException("501");
 				} else
@@ -79,5 +77,13 @@ public abstract class AbstractFtpServerListener {
 				throw new FtpCommandException("501");
 		}
 		return CommandResult.Default;
+	}
+	
+	private void setResponseCode(IFtpSession ftpSession){
+		IFtpCommand command = ftpSession.getRequest().getFtpCommand();
+		DefaultFtpResponse ftpResponse = (DefaultFtpResponse)ftpSession.getResponse();
+		if(command.getCommand().valueOf().equals(FtpRequestCommand.OPEN.name())){
+			ftpResponse.setCode(220);
+		}
 	}
 }
