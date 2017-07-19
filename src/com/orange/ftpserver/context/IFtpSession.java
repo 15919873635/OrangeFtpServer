@@ -8,6 +8,7 @@ public interface IFtpSession {
 	IFtpResponse getResponse();
 	IFtpUser getUser();
 	IFtpContext getFtpContext();
+	IFtpStaticData getFtpStaticData();
 	
 	boolean isLoggedIn();
 	boolean isSecure();
