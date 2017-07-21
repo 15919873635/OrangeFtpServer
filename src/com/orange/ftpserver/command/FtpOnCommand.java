@@ -70,6 +70,14 @@ class FtpOnCommand {
 		}
 	}
 	
+	public void onCwd(IFtpSession ftpSession) throws FtpCommandException {
+		
+	}
+	
+	public void onPwd(IFtpSession ftpSession) throws FtpCommandException {
+		
+	}
+	
 	public void onOpen(IFtpSession ftpSession) throws FtpCommandException {
 		
 	}

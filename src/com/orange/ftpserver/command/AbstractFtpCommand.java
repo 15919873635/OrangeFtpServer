@@ -69,8 +69,14 @@ public abstract class AbstractFtpCommand extends FtpOnCommand implements IFtpCom
 	private void onCommand() 
 			throws FtpCommandException{
 		switch (ftpCommand) {
+			case CWD:
+				super.onCwd(ftpSession);
+				break;
 			case OPEN:
 				super.onOpen(ftpSession);
+				break;
+			case PWD:
+				super.onPwd(ftpSession);
 				break;
 			case MKD:
 				super.onMkdir(ftpSession);
