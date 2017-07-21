@@ -76,9 +76,9 @@ class FtpOnCommand {
 	private void setResponseCode(IFtpSession ftpSession){
 		IFtpCommand command = ftpSession.getRequest().getFtpCommand();
 		DefaultFtpResponse ftpResponse = (DefaultFtpResponse)ftpSession.getResponse();
-		if(command.getCommand().valueOf().equals(FtpRequestCommand.OPEN.name())){
+		if(command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.OPEN.name())){
 			ftpResponse.setCode(220);
-		} else if(command.getCommand().valueOf().equals(FtpRequestCommand.PWD.name()))
+		} else if(command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.PWD.name()))
 			ftpResponse.setCode(257);
 	}
 }

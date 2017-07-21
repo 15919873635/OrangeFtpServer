@@ -64,5 +64,4 @@ final class DefaultFtpServerListener extends AbstractFtpServerListener{
 	public void afterDelete(IFtpSession ftpSession) throws FtpCommandException {
 		
 	}
-	
 }

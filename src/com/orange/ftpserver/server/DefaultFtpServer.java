@@ -60,6 +60,10 @@ public final class DefaultFtpServer implements IFtpServer {
 		if(bossGroup != null)
 			bossGroup.shutdownNow();
 	}
+	
+	public void setServerPort(int serverPort){
+		this.serverPort = serverPort;
+	}
 
 	@Override
 	public int getServerPort() {
