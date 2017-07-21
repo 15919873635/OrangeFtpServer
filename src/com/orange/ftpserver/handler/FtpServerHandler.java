@@ -9,6 +9,7 @@ import com.orange.ftpserver.context.DefaultFtpContext;
 import com.orange.ftpserver.context.DefaultFtpSession;
 import com.orange.ftpserver.context.IFtpContext;
 import com.orange.ftpserver.obj.FtpTransferRequestObject;
+import com.orange.ftpserver.obj.FtpTransferResponseObject;
 
 public final class FtpServerHandler extends AbstractFtpHandler {
 	
@@ -37,6 +38,12 @@ public final class FtpServerHandler extends AbstractFtpHandler {
             }
             commandDecoder.excuteCommand(session,requestObject);
         }
-		ctx.getChannel().write(session.getResponse().getMessage());
+        FtpTransferResponseObject responseObj = new FtpTransferResponseObject();
+        responseObj.setSessionId(session.getSessionId());
+        if(session.getResponse().getParameters().length > 0)
+        	responseObj.setRespMessage(session.getResponse().getMessage(),session.getResponse().getParameters());
+        else
+        	responseObj.setRespMessage(session.getResponse().getMessage());
+		ctx.getChannel().write(responseObj.getRespMessage());
 	}
 }

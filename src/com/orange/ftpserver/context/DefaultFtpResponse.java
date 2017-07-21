@@ -11,6 +11,8 @@ public final class DefaultFtpResponse implements IFtpResponse {
 	
 	private int code;
 	
+	private String[] parameters;
+	
 	public DefaultFtpResponse(IFtpSession ftpSession){
 		this.code = 0;
 		this.ftpSession = ftpSession;
@@ -26,6 +28,14 @@ public final class DefaultFtpResponse implements IFtpResponse {
 	@Override
 	public int getCode() {
 		return code;
+	}
+	
+	public String[] getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(String[] parameters) {
+		this.parameters = parameters;
 	}
 
 	@Override

@@ -1,6 +1,7 @@
 package com.orange.ftpserver.obj;
 
 import java.io.Serializable;
+import java.text.MessageFormat;
 
 public final class FtpTransferResponseObject implements Serializable{
 
@@ -30,8 +31,13 @@ public final class FtpTransferResponseObject implements Serializable{
 	public String getRespMessage() {
 		return respMessage;
 	}
-
+	
 	public void setRespMessage(String respMessage) {
 		this.respMessage = respMessage;
+	}
+	
+	public void setRespMessage(String respMessage,String[] parameters) {
+		String format = MessageFormat.format(respMessage, parameters);
+		this.respMessage = format;
 	}
 }

@@ -2,7 +2,18 @@ package com.orange.ftpserver.context;
 
 public interface IFtpResponse {
 	
+	/**
+	 * 
+	 * @return
+	 */
 	IFtpSession getSession();
+	
+	/**
+	 * this response parameters
+	 * 
+	 * @return parameters array
+	 */
+	String[] getParameters();
 	
     /**
      * The reply code

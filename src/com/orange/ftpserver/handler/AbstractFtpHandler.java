@@ -9,6 +9,7 @@ import com.orange.ftpserver.context.DefaultFtpContext;
 import com.orange.ftpserver.context.DefaultFtpResponse;
 import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
+import com.orange.ftpserver.obj.FtpTransferResponseObject;
 
 public abstract class AbstractFtpHandler extends SimpleChannelHandler {
 	protected IFtpSession session;
@@ -22,7 +23,13 @@ public abstract class AbstractFtpHandler extends SimpleChannelHandler {
 			DefaultFtpResponse ftpResponse = (DefaultFtpResponse)session.getResponse();
 			ftpResponse.setCode(StringUtils.isNumeric(ftpCommandException.getMessage()) ? Integer.parseInt(ftpCommandException.getMessage()) : 200);
 			session = null;
-			ctx.getChannel().write(ftpResponse.getMessage());
+			FtpTransferResponseObject responseObj = new FtpTransferResponseObject();
+	        responseObj.setSessionId(session.getSessionId());
+			if(session.getResponse().getParameters().length > 0)
+	        	responseObj.setRespMessage(session.getResponse().getMessage(),session.getResponse().getParameters());
+	        else
+	        	responseObj.setRespMessage(session.getResponse().getMessage());
+			ctx.getChannel().write(responseObj.getRespMessage());
 		}
 	}
 }
