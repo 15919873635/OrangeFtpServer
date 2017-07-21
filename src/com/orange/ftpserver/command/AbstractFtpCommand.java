@@ -23,7 +23,7 @@ public abstract class AbstractFtpCommand extends FtpOnCommand implements IFtpCom
 		ftpRequest.setFtpCommand(this);
 	}
 	
-	protected abstract void exec() throws Exception;
+	protected abstract void executCommand(IFtpSession ftpSession) throws FtpCommandException;
 	
 	@Override
 	public IFtpSession getSession(){
@@ -66,39 +66,6 @@ public abstract class AbstractFtpCommand extends FtpOnCommand implements IFtpCom
 		}
 	}
 	
-	private void onCommand() 
-			throws FtpCommandException{
-		switch (ftpCommand) {
-			case CWD:
-				super.onCwd(ftpSession);
-				break;
-			case OPEN:
-				super.onOpen(ftpSession);
-				break;
-			case PWD:
-				super.onPwd(ftpSession);
-				break;
-			case MKD:
-				super.onMkdir(ftpSession);
-				break;
-			case RMD:
-				super.onRmdir(ftpSession);
-				break;
-			case STOR:
-				super.onStore(ftpSession);
-				break;
-			case DELE:
-				super.onDelete(ftpSession);
-				break;
-			case QUIT:
-			case CLOSE:
-				super.onClose(ftpSession);
-				break;
-			default:
-				break;
-		}
-	}
-	
 	private void afterCommand(Collection<AbstractFtpServerListener> values) 
 			throws FtpCommandException{
 		for(AbstractFtpServerListener serverListener : values){
@@ -124,13 +91,12 @@ public abstract class AbstractFtpCommand extends FtpOnCommand implements IFtpCom
 			}
 		}
 	}
-	
-	protected void executCommand() throws FtpCommandException{
+	protected  void exec() throws FtpCommandException{
 		Map<String,AbstractFtpServerListener> listenerMap = ftpSession.getFtpContext().getListenerMap();
 		Collection<AbstractFtpServerListener> values = listenerMap.values();
 		super.beforeCommond(ftpSession);
 		beforeCommand(values);
-		onCommand();
+		executCommand(ftpSession);
 		afterCommand(values);
 		super.afterCommond(ftpSession);
 	}

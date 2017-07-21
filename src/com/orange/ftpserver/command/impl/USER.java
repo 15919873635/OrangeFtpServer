@@ -12,7 +12,7 @@ public final class USER extends AbstractFtpCommand{
 	}
 
 	@Override
-	public void exec() throws FtpCommandException{
-		super.executCommand();
+	public void executCommand(IFtpSession ftpSession) throws FtpCommandException{
+		
 	}
 }

@@ -20,4 +20,8 @@ public class DefaultFtpStaticData implements IFtpStaticData {
 	public String getCWP() {
 		return currentWorkPath;
 	}
+	
+	public void setCWP(String currentWorkPath){
+		this.currentWorkPath = currentWorkPath;
+	}
 }

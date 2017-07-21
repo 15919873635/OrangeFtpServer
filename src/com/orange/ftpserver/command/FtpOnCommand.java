@@ -58,6 +58,15 @@ class FtpOnCommand {
 					throw new FtpCommandException("501");
 			} else
 				throw new FtpCommandException("501");
+		} else if(command.getCommand().valueOf().equals(FtpRequestCommand.CWD.name())){
+			String[] parameters = command.getParameters();
+			if(parameters.length == 1){
+				String address = parameters[0];
+				if(!address.startsWith("/")){
+					throw new FtpCommandException("501");
+				} 
+			} else
+				throw new FtpCommandException("501");
 		}
 		return CommandResult.Default;
 	}
@@ -67,42 +76,7 @@ class FtpOnCommand {
 		DefaultFtpResponse ftpResponse = (DefaultFtpResponse)ftpSession.getResponse();
 		if(command.getCommand().valueOf().equals(FtpRequestCommand.OPEN.name())){
 			ftpResponse.setCode(220);
-		}
-	}
-	
-	public void onCwd(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-	
-	public void onPwd(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-	
-	public void onOpen(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-	
-	public void onRmdir(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-	
-	public void onStore(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-	
-	public void onMkdir(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-	
-	public void onAppend(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-	
-	public void onDelete(IFtpSession ftpSession) throws FtpCommandException {
-		
-	}
-	
-	public void onClose(IFtpSession ftpSession) throws FtpCommandException {
-		
+		} else if(command.getCommand().valueOf().equals(FtpRequestCommand.PWD.name()))
+			ftpResponse.setCode(220);
 	}
 }
