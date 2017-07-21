@@ -1,20 +1,29 @@
 package com.orange.ftpserver.handler;
 
 import org.apache.commons.lang.StringUtils;
+import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
+import org.jboss.netty.channel.SimpleChannelHandler;
 
+import com.orange.ftpserver.command.FtpRequestCommand;
 import com.orange.ftpserver.command.FtpRequestCommandParser;
 import com.orange.ftpserver.context.DefaultFtpContext;
+import com.orange.ftpserver.context.DefaultFtpResponse;
 import com.orange.ftpserver.context.DefaultFtpSession;
 import com.orange.ftpserver.context.IFtpContext;
+import com.orange.ftpserver.context.IFtpSession;
+import com.orange.ftpserver.exception.FtpCommandException;
 import com.orange.ftpserver.obj.FtpTransferRequestObject;
+import com.orange.ftpserver.obj.FtpTransferResponseObject;
 
-public final class FtpServerHandler extends AbstractFtpHandler {
+public final class FtpServerHandler extends SimpleChannelHandler{
+	private IFtpSession session;
 	
 	private IFtpContext ftpContext;
 
-	protected FtpRequestCommandParser commandDecoder = FtpRequestCommandParser.defaultParser();
+	private FtpRequestCommandParser commandDecoder = FtpRequestCommandParser.defaultParser();
 	
 	public FtpServerHandler(IFtpContext ftpContext){
 		this.ftpContext = ftpContext;
@@ -37,6 +46,44 @@ public final class FtpServerHandler extends AbstractFtpHandler {
             }
             commandDecoder.excuteCommand(session,requestObject);
         }
-        super.writeResponse(ctx.getChannel());
+        writeResponseAndCloseSession(ctx.getChannel());
+	}
+	
+
+	
+	@Override
+	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent cause) throws Exception
+	{ 
+		if(cause.getCause() instanceof FtpCommandException){
+			FtpCommandException ftpCommandException = (FtpCommandException)cause.getCause();
+			DefaultFtpResponse ftpResponse = (DefaultFtpResponse)session.getResponse();
+			ftpResponse.setCode(StringUtils.isNumeric(ftpCommandException.getMessage()) ? Integer.parseInt(ftpCommandException.getMessage()) : 200);
+			writeResponse(ctx.getChannel());
+		}
+	}
+	
+	protected void writeResponse(Channel channel){
+		FtpTransferResponseObject responseObj = new FtpTransferResponseObject();
+        responseObj.setSessionId(session.getSessionId());
+		if(session.getResponse().getParameters().length > 0)
+        	responseObj.setRespMessage(session.getResponse().getMessage(),session.getResponse().getParameters());
+        else
+        	responseObj.setRespMessage(session.getResponse().getMessage());
+		channel.write(responseObj.getRespMessage());
+	}
+	
+	protected void writeResponseAndCloseSession(Channel channel){
+		FtpRequestCommand ftpCommand = session.getRequest().getFtpCommand().getCommand();
+		writeResponse(channel);
+		switch(ftpCommand){
+			case CLOSE:
+			case QUIT:
+				DefaultFtpContext ftpContext = (DefaultFtpContext)session.getFtpContext();
+				ftpContext.deleteSession(session.getSessionId());
+				session = null;
+				break;
+			default:
+				break;
+		}
 	}
 }
