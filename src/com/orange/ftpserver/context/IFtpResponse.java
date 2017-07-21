@@ -90,7 +90,7 @@ public interface IFtpResponse {
     	
     	REPLY_250_REQUESTED_FILE_ACTION_OKAY(250,"250 Requested file action okay, completed."),
     	
-    	REPLY_257_PATHNAME_CREATED(257,"257 path created."),
+    	REPLY_257_PATHNAME_CREATED(257,"257 {0} created."),
     	
     	REPLY_331_USER_NAME_OKAY_NEED_PASSWORD(331,"331 User name okay, need password."),
     	

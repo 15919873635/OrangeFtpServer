@@ -36,7 +36,7 @@ class FtpOnCommand {
 				|| command.valueOf().equals(FtpRequestCommand.RMD.name()))
 		{
 			if(!ftpSession.isLoggedIn())
-				throw new FtpCommandException("501");
+				throw new FtpCommandException("530");
 		}
 		return CommandResult.Default;
 	}
@@ -77,6 +77,6 @@ class FtpOnCommand {
 		if(command.getCommand().valueOf().equals(FtpRequestCommand.OPEN.name())){
 			ftpResponse.setCode(220);
 		} else if(command.getCommand().valueOf().equals(FtpRequestCommand.PWD.name()))
-			ftpResponse.setCode(220);
+			ftpResponse.setCode(257);
 	}
 }
