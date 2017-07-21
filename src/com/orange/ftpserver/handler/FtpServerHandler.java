@@ -49,8 +49,6 @@ public final class FtpServerHandler extends SimpleChannelHandler{
         writeResponseAndCloseSession(ctx.getChannel());
 	}
 	
-
-	
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, ExceptionEvent cause) throws Exception
 	{ 
@@ -62,7 +60,7 @@ public final class FtpServerHandler extends SimpleChannelHandler{
 		}
 	}
 	
-	protected void writeResponse(Channel channel){
+	private void writeResponse(Channel channel){
 		FtpTransferResponseObject responseObj = new FtpTransferResponseObject();
         responseObj.setSessionId(session.getSessionId());
 		if(session.getResponse().getParameters().length > 0)
@@ -72,7 +70,7 @@ public final class FtpServerHandler extends SimpleChannelHandler{
 		channel.write(responseObj.getRespMessage());
 	}
 	
-	protected void writeResponseAndCloseSession(Channel channel){
+	private void writeResponseAndCloseSession(Channel channel){
 		FtpRequestCommand ftpCommand = session.getRequest().getFtpCommand().getCommand();
 		writeResponse(channel);
 		switch(ftpCommand){
