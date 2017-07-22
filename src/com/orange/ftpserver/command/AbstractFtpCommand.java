@@ -56,7 +56,6 @@ public abstract class AbstractFtpCommand extends FtpOnCommand implements IFtpCom
 				case DELE:
 					serverListener.beforeDelete(ftpSession);
 					break;
-				case QUIT:
 				case CLOSE:
 					serverListener.beforeClose(ftpSession);
 					break;
@@ -82,7 +81,6 @@ public abstract class AbstractFtpCommand extends FtpOnCommand implements IFtpCom
 				case DELE:
 					serverListener.afterDelete(ftpSession);
 					break;
-				case QUIT:
 				case CLOSE:
 					serverListener.afterClose(ftpSession);
 					break;
@@ -91,7 +89,8 @@ public abstract class AbstractFtpCommand extends FtpOnCommand implements IFtpCom
 			}
 		}
 	}
-	protected  void exec() throws FtpCommandException{
+	
+	public void exec() throws FtpCommandException{
 		Map<String,AbstractFtpServerListener> listenerMap = ftpSession.getFtpContext().getListenerMap();
 		Collection<AbstractFtpServerListener> values = listenerMap.values();
 		super.beforeCommond(ftpSession);

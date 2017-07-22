@@ -29,7 +29,7 @@ class FtpOnCommand {
 		if(command.valueOf().equals(FtpRequestCommand.CWD.name())
 				|| command.valueOf().equals(FtpRequestCommand.PWD.name())
 				|| command.valueOf().equals(FtpRequestCommand.CDUP.name())
-				|| command.valueOf().equals(FtpRequestCommand.CLOSE.name())
+				|| command.valueOf().equals(FtpRequestCommand.BYE.name())
 				|| command.valueOf().equals(FtpRequestCommand.QUIT.name())
 				|| command.valueOf().equals(FtpRequestCommand.STOR.name())
 				|| command.valueOf().equals(FtpRequestCommand.DELE.name())

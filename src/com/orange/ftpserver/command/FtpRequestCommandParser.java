@@ -8,6 +8,7 @@ import org.apache.commons.lang.StringUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.orange.ftpserver.command.impl.CLOSE;
 import com.orange.ftpserver.command.impl.OPEN;
+import com.orange.ftpserver.command.impl.QUIT;
 import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 import com.orange.ftpserver.obj.FtpTransferRequestObject;
@@ -58,16 +59,20 @@ public final class FtpRequestCommandParser {
 			throws FtpCommandException{
 		FtpRequestCommand recivedCommand = parseCommand(requestObject);
 		String[] parameters = parseParameters(requestObject);
+		IFtpCommand ftpCommand = null;
 		switch (recivedCommand) {
-		case OPEN:
-			OPEN open = new OPEN(session,parameters);
-			open.exec();
-			break;
-		case CLOSE:
-			CLOSE close = new CLOSE(session,parameters);
-			close.exec();
-		default:
-			break;
+			case OPEN:
+				ftpCommand = new OPEN(session,parameters);
+				break;
+			case BYE:
+			case QUIT:
+				ftpCommand = new QUIT(session, parameters);
+				break;
+			case CLOSE:
+				ftpCommand = new CLOSE(session,parameters);
+			default:
+				break;
 		}
+		ftpCommand.exec();
 	}
 }

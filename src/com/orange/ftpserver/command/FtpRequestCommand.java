@@ -13,6 +13,7 @@ public enum FtpRequestCommand {
 	APPE("appe"),
 	AUTH("auth"),
 	BLANK(""),
+	BYE("bye"),
 	CDUP("cdup"),
 	CLOSE("close"),
 	CWD("cwd"),
