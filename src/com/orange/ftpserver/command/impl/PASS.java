@@ -6,7 +6,7 @@ import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 
 /**
- * 用户密码
+ * 指定用户口令，该命令必须跟在登录用户名命令之后
  * @author lining
  *
  */

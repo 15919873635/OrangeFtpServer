@@ -11,6 +11,11 @@ import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 import com.orange.ftpserver.user.IFtpUser;
 
+/**
+ * 指定登录的用户名，以便服务器进行身份验证
+ * @author lining
+ *
+ */
 public final class USER extends AbstractFtpCommand{
 
 	protected USER(IFtpSession ftpSession, String[] parameters) {
