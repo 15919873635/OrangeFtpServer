@@ -19,6 +19,7 @@ public final class USER extends AbstractFtpCommand{
 
 	@Override
 	public void executCommand(IFtpSession ftpSession) throws FtpCommandException{
+		int responseCode = 220;
 		String userName = commandParameter[0];
 		String password = null;
 		if(commandParameter.length > 1){
@@ -27,10 +28,13 @@ public final class USER extends AbstractFtpCommand{
 		if(StringUtils.isNotBlank(userName)){
 			List<IFtpUser> ftpUserList = ftpSession.getFtpContext().getUserManager().getUsers();
 			if(checkUserContains(ftpUserList,userName)){
-				DefaultFtpResponse ftpResponse = (DefaultFtpResponse)ftpSession.getResponse();
-				ftpResponse.setCode(331);
-			}
+				if(!checkPassword(ftpUserList,userName,password))
+					responseCode = 331;
+			}else
+				responseCode = 230;
 		}
+		DefaultFtpResponse ftpResponse = (DefaultFtpResponse)ftpSession.getResponse();
+		ftpResponse.setCode(responseCode);
 	}
 	
 	private boolean checkUserContains(List<IFtpUser> ftpUserList,String userName){
@@ -47,6 +51,17 @@ public final class USER extends AbstractFtpCommand{
 	}
 	
 	private boolean checkPassword(List<IFtpUser> ftpUserList,String userName,String password){
-		return false;
+		boolean correct = false;
+		if(ftpUserList != null && ftpUserList.size() > 0){
+			for(IFtpUser ftpUser : ftpUserList){
+				if(ftpUser.getUserName().equals(userName)){
+					if((ftpUser.getUserName() == null && password == null) 
+							|| ftpUser.getUserName().equals(password))
+						correct = true;
+					break;
+				}
+			}
+		}
+		return correct;
 	}
 }
