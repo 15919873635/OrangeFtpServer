@@ -56,6 +56,7 @@ public enum FtpRequestCommand {
 	STOU("stou"),
 	STRU("stru"),
 	SYST("syst"),
+	TYPE("type"),
 	USER("user");
 	
 	private String name;
