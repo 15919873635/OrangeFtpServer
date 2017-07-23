@@ -68,7 +68,9 @@ class FtpOnCommand {
 					throw new FtpCommandException("501");
 			} else
 				throw new FtpCommandException("501");
-		} else if(command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.USER.name())){
+		} else if(command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.USER.name())
+				|| command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.MKD.name())
+				|| command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.RMD.name())){
 			String[] parameters = command.getParameters();
 			if(parameters.length == 0)
 				throw new FtpCommandException("332");
@@ -79,9 +81,14 @@ class FtpOnCommand {
 	private void setResponseCode(IFtpSession ftpSession){
 		IFtpCommand command = ftpSession.getRequest().getFtpCommand();
 		DefaultFtpResponse ftpResponse = (DefaultFtpResponse)ftpSession.getResponse();
-		if(command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.OPEN.name())){
+		if(command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.OPEN.name()))
 			ftpResponse.setCode(220);
-		} else if(command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.PWD.name()))
+		else if(command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.PWD.name())
+				|| command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.MKD.name()))
 			ftpResponse.setCode(257);
+		else if(command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.RMD.name())
+				|| command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.CWD.name())
+				|| command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.CDUP.name()))
+			ftpResponse.setCode(250);
 	}
 }

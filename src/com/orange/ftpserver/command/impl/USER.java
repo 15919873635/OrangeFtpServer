@@ -37,7 +37,8 @@ public final class USER extends AbstractFtpCommand{
 					responseCode = 331;
 			}else
 				responseCode = 230;
-		}
+		}else
+			responseCode = 332;
 		DefaultFtpResponse ftpResponse = (DefaultFtpResponse)ftpSession.getResponse();
 		ftpResponse.setCode(responseCode);
 	}
