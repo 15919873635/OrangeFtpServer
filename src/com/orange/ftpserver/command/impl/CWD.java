@@ -21,14 +21,7 @@ public class CWD extends AbstractFtpCommand{
 		DefaultFtpStaticData ftpStaticData = (DefaultFtpStaticData)ftpSession.getFtpStaticData();
 		File directory = new File(ftpStaticData.getCWP());
 		if(directory.isDirectory()){
-			if(newWorkingDirectory.equals("/")){
-				String parentPath = directory.getParent();
-				if(parentPath.equals(ftpSession.getUser().getHomedirectory())){
-					ftpStaticData.setCWP(parentPath);
-				}
-			} else {
-				ftpStaticData.setCWP(ftpSession.getUser().getHomedirectory() + newWorkingDirectory);
-			}
+			ftpStaticData.setCWP(ftpSession.getUser().getHomedirectory() + newWorkingDirectory);
 			DefaultFtpResponse ftpResponse = (DefaultFtpResponse)ftpSession.getResponse();
 			ftpResponse.setParameters(new String[]{newWorkingDirectory});
 		}
