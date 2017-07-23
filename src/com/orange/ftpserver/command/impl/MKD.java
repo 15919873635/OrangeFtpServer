@@ -20,7 +20,8 @@ public class MKD extends AbstractFtpCommand{
 		String newWorkingDirectory = commandParameter[0];
 		DefaultFtpStaticData ftpStaticData = (DefaultFtpStaticData)ftpSession.getFtpStaticData();
 		File directory = new File(ftpStaticData.getCWP());
-		if(directory.isDirectory()){
+		if(directory.isDirectory() 
+				&& directory.canWrite()){
 			File newDirectory = new File(ftpStaticData.getCWP() + newWorkingDirectory);
 			if(!newDirectory.exists())
 				newDirectory.mkdir();
