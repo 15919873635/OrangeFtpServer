@@ -74,7 +74,7 @@ public final class FtpServerHandler extends SimpleChannelHandler{
 		FtpRequestCommand ftpCommand = session.getRequest().getFtpCommand().getCommand();
 		writeResponse(channel);
 		switch(ftpCommand){
-			case CLOSE:
+			case BYE:
 			case QUIT:
 				DefaultFtpContext ftpContext = (DefaultFtpContext)session.getFtpContext();
 				ftpContext.deleteSession(session.getSessionId());
