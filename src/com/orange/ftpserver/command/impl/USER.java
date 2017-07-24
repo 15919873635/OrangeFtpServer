@@ -8,6 +8,7 @@ import com.orange.ftpserver.command.AbstractFtpCommand;
 import com.orange.ftpserver.command.FtpRequestCommand;
 import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
+import com.orange.ftpserver.user.BaseUser;
 import com.orange.ftpserver.user.IFtpUser;
 
 /**
@@ -28,6 +29,9 @@ public final class USER extends AbstractFtpCommand{
 			List<IFtpUser> ftpUserList = ftpSession.getFtpContext().getUserManager().getUsers();
 			if(!checkUserContains(ftpUserList,userName)){
 				throw new FtpCommandException("230");
+			}else{
+				BaseUser user = (BaseUser)ftpSession.getUser();
+				user.setUserName(userName);
 			}
 		}else
 			throw new FtpCommandException("332");

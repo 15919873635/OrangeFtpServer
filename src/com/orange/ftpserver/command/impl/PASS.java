@@ -6,6 +6,7 @@ import com.orange.ftpserver.command.AbstractFtpCommand;
 import com.orange.ftpserver.command.FtpRequestCommand;
 import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
+import com.orange.ftpserver.user.BaseUser;
 import com.orange.ftpserver.user.IFtpUser;
 
 /**
@@ -21,11 +22,14 @@ public class PASS extends AbstractFtpCommand{
 
 	@Override
 	public void executCommand(IFtpSession ftpSession) throws FtpCommandException{
-		String userName = ftpSession.getUser().getUserName();
+		BaseUser user = (BaseUser)ftpSession.getUser();
+		String userName = user.getUserName();
 		String password = commandParameter[0];
 		List<IFtpUser> ftpUserList = ftpSession.getFtpContext().getUserManager().getUsers();
 		if(!checkPassword(ftpUserList,userName,password))
 			throw new FtpCommandException("331");
+		else
+			user.setUserPassword(password);
 	}
 	
 	private boolean checkPassword(List<IFtpUser> ftpUserList,String userName,String password){
