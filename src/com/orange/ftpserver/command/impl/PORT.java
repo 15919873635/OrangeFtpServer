@@ -18,6 +18,7 @@ public class PORT extends AbstractFtpCommand{
 
 	@Override
 	public void executCommand(IFtpSession ftpSession) throws FtpCommandException{
-		
+		String address = commandParameter[0];
+		String[] addSplit = address.split(":");
 	}
 }

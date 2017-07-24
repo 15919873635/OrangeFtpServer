@@ -35,7 +35,8 @@ class FtpOnCommand {
 				|| command.valueOf().equalsIgnoreCase(FtpRequestCommand.DELE.name())
 				|| command.valueOf().equalsIgnoreCase(FtpRequestCommand.LIST.name())
 				|| command.valueOf().equalsIgnoreCase(FtpRequestCommand.MKD.name())
-				|| command.valueOf().equalsIgnoreCase(FtpRequestCommand.RMD.name()))
+				|| command.valueOf().equalsIgnoreCase(FtpRequestCommand.RMD.name())
+				|| command.valueOf().equalsIgnoreCase(FtpRequestCommand.PORT.name()))
 		{
 			if(!ftpSession.isLoggedIn())
 				throw new FtpCommandException("530");
@@ -46,7 +47,7 @@ class FtpOnCommand {
 	private CommandResult checkparameters(IFtpSession ftpSession) 
 			throws FtpCommandException{
 		IFtpCommand command = ftpSession.getRequest().getFtpCommand();
-		if(command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.OPEN.name())){
+		if(command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.PORT.name())){
 			String[] parameters = command.getParameters();
 			if(parameters.length == 1){
 				String address = parameters[0];
