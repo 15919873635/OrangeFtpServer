@@ -74,7 +74,7 @@ public interface IFtpResponse {
     	
     	REPLY_214_HELP_MESSAGE(214,"214 Help message."),
     	
-    	REPLY_215_NAME_SYSTEM_TYPE(215,"215 NAME system type."),
+    	REPLY_215_NAME_SYSTEM_TYPE(215,"215 sysname={0},sysArch={1},sysVer={2}"),
     	
     	REPLY_220_SERVICE_READY(220,"220 Service ready for new user."),
     	

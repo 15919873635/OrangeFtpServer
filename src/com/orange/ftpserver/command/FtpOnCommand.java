@@ -91,5 +91,7 @@ class FtpOnCommand {
 				|| command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.CWD.name())
 				|| command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.CDUP.name()))
 			ftpResponse.setCode(250);
+		else if(command.getCommand().valueOf().equalsIgnoreCase(FtpRequestCommand.SYST.name()))
+			ftpResponse.setCode(215);
 	}
 }
