@@ -6,7 +6,7 @@ import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 
 /**
- * 
+ * 认证方式
  * @author lining
  *
  */
@@ -18,6 +18,6 @@ public class AUTH extends AbstractFtpCommand{
 
 	@Override
 	protected void executCommand(IFtpSession ftpSession) throws FtpCommandException {
-		
+		String authType = commandParameter[0];
 	}
 }

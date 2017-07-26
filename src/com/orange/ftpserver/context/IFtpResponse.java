@@ -70,7 +70,7 @@ public interface IFtpResponse {
     	
     	REPLY_212_DIRECTORY_STATUS(212,"212 Directory status."),
     	
-    	REPLY_213_FILE_STATUS(213,"213 File status."),
+    	REPLY_213_FILE_STATUS(213,"213 {0}"),
     	
     	REPLY_214_HELP_MESSAGE(214,"214 Help message."),
     	
