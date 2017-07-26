@@ -6,18 +6,18 @@ import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 
 /**
- * 传输模式（S=流模式，B=块模式，C=压缩模式）
+ * 列出指定目录内容,如果不是目录则报错
  * @author lining
  *
  */
-public class MODE extends AbstractFtpCommand{
+public class NLST extends AbstractFtpCommand{
 	
-	public MODE(IFtpSession ftpSession, String[] parameters) {
-		super(ftpSession, FtpRequestCommand.MODE, parameters);
+	public NLST(IFtpSession ftpSession, String[] parameters) {
+		super(ftpSession, FtpRequestCommand.NLST, parameters);
 	}
 
 	@Override
-	public void executCommand(IFtpSession ftpSession) throws FtpCommandException{
+	protected void executCommand(IFtpSession ftpSession) throws FtpCommandException {
 		
 	}
 }
