@@ -20,6 +20,7 @@ public abstract class AbstractFtpServer implements IFtpServer{
 	private ExecutorService bossGroup;
 	private ExecutorService workerGroup;
 	private int serverPort;
+	protected String safeMode = "";
 	private IFtpContext ftpContext;
 	
 	public AbstractFtpServer(IFtpContext ftpContext){
@@ -32,6 +33,11 @@ public abstract class AbstractFtpServer implements IFtpServer{
 		this.serverPort = serverPort;
 	}
 	
+	public AbstractFtpServer(IFtpContext ftpContext,int serverPort,String safeMode){
+		this.ftpContext = ftpContext;
+		this.serverPort = serverPort;
+		this.safeMode = safeMode;
+	}
 	protected abstract void addSSL(ChannelPipeline pipeline);
 	
 	@Override
@@ -70,5 +76,13 @@ public abstract class AbstractFtpServer implements IFtpServer{
 	@Override
 	public int getServerPort() {
 		return this.serverPort;
+	}
+	
+	public void setSafeMode(String safeMode){
+		this.safeMode = safeMode;
+	}
+	
+	public String getMode(){
+		return this.safeMode;
 	}
 }

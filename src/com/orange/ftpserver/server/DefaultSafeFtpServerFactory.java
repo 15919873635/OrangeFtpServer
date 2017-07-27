@@ -13,6 +13,8 @@ public class DefaultSafeFtpServerFactory extends AbstractFtpServerFactory{
 			ftpServer = new DefaultSafeFtpServer(ftpContext);
 		else
 			ftpServer = new DefaultSafeFtpServer(ftpContext,serverPort);
+		DefaultSafeFtpServer defaultSafeFtpServer = (DefaultSafeFtpServer)ftpServer;
+		defaultSafeFtpServer.setSafeMode(safeMode);
 		ftpContext.setFtpServer(ftpServer);
 		return ftpServer;
 	}
@@ -20,6 +22,8 @@ public class DefaultSafeFtpServerFactory extends AbstractFtpServerFactory{
 	@Override
 	public IFtpServer createServer(int serverPort) {
 		IFtpServer ftpServer = new DefaultSafeFtpServer(ftpContext,serverPort);
+		DefaultSafeFtpServer defaultSafeFtpServer = (DefaultSafeFtpServer)ftpServer;
+		defaultSafeFtpServer.setSafeMode(safeMode);
 		ftpContext.setFtpServer(ftpServer);
 		return ftpServer;
 	}

@@ -11,6 +11,7 @@ public abstract class AbstractFtpServerFactory{
 	
 	protected DefaultFtpContext ftpContext = new DefaultFtpContext();
 	protected int serverPort = 0;
+	protected String safeMode = "";
 	
 	public AbstractFtpServerFactory(){
 		Map<String,AbstractFtpServerListener> defaultListenerMap = createListenerMap();
@@ -35,5 +36,13 @@ public abstract class AbstractFtpServerFactory{
 	
 	public IFtpContext getFtpContext() {
 		return ftpContext;
+	}
+	
+	public void setSafeMode(String safeMode){
+		this.safeMode = safeMode;
+	}
+	
+	public String getSafeMode(){
+		return this.safeMode;
 	}
 }

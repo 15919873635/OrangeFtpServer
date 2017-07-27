@@ -13,14 +13,15 @@ import org.jboss.netty.handler.ssl.SslHandler;
 import com.orange.ftpserver.context.IFtpContext;
 
 public class DefaultSafeFtpServer extends AbstractFtpServer{	
-	private final String SSLMODE = "TLS";
 	
 	public DefaultSafeFtpServer(IFtpContext ftpContext){
 		super(ftpContext);
+		safeMode = "TLS";
 	}
 	
 	public DefaultSafeFtpServer(IFtpContext ftpContext,int serverPort){
 		super(ftpContext,serverPort);
+		safeMode = "TLS";
 	}
 
 	@Override
@@ -43,7 +44,7 @@ public class DefaultSafeFtpServer extends AbstractFtpServer{
 	        tmf.init(ts);  
 	
 	        // Initialize the SSLContext to work with our key managers.  
-	        SSLContext serverContext = SSLContext.getInstance(SSLMODE);  
+	        SSLContext serverContext = SSLContext.getInstance(safeMode);  
 	        serverContext.init(kmf.getKeyManagers(), tmf.getTrustManagers(), null);
 	        SSLEngine sslEngine = serverContext.createSSLEngine();  
 	        sslEngine.setUseClientMode(false);  
