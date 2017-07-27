@@ -1,5 +1,7 @@
 package com.orange.ftpserver.command.impl;
 
+import org.apache.commons.lang.StringUtils;
+
 import com.orange.ftpserver.command.AbstractFtpCommand;
 import com.orange.ftpserver.command.FtpRequestCommand;
 import com.orange.ftpserver.context.IFtpSession;
@@ -19,5 +21,8 @@ public class AUTH extends AbstractFtpCommand{
 	@Override
 	protected void executCommand(IFtpSession ftpSession) throws FtpCommandException {
 		String authType = commandParameter[0];
+		if(StringUtils.isNotBlank(authType)){
+			
+		}
 	}
 }
