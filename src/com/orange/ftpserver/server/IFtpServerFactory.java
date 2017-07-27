@@ -6,7 +6,5 @@ public interface IFtpServerFactory {
 	public void setServerPort(int serverPort);
 	public IFtpServer createServer();
 	public IFtpServer createServer(int serverPort);
-	public IFtpServer createSafeServer();
-	public IFtpServer createSafeServer(int serverPort);
 	public IFtpContext getFtpContext();
 }
