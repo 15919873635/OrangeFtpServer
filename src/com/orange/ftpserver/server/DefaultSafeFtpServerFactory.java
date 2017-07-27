@@ -2,6 +2,10 @@ package com.orange.ftpserver.server;
 
 public class DefaultSafeFtpServerFactory extends AbstractFtpServerFactory{
 
+	public DefaultSafeFtpServerFactory(){
+		super();
+	}
+	
 	@Override
 	public IFtpServer createServer() {
 		IFtpServer ftpServer = null;
