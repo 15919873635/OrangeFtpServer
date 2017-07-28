@@ -12,7 +12,7 @@ import org.jboss.netty.handler.ssl.SslHandler;
 
 import com.orange.ftpserver.context.IFtpContext;
 
-public class DefaultSafeFtpServer extends AbstractFtpServer{	
+public final class DefaultSafeFtpServer extends AbstractFtpServer{	
 	
 	public DefaultSafeFtpServer(IFtpContext ftpContext){
 		super(ftpContext);

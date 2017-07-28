@@ -1,6 +1,6 @@
 package com.orange.ftpserver.server;
 
-public class DefaultSafeFtpServerFactory extends AbstractFtpServerFactory{
+public final class DefaultSafeFtpServerFactory extends AbstractFtpServerFactory{
 
 	public DefaultSafeFtpServerFactory(){
 		super();
