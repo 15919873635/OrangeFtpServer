@@ -4,8 +4,10 @@ import org.apache.commons.lang.StringUtils;
 
 import com.orange.ftpserver.command.AbstractFtpCommand;
 import com.orange.ftpserver.command.FtpRequestCommand;
+import com.orange.ftpserver.context.DefaultFtpContext;
 import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
+import com.orange.ftpserver.server.AbstractFtpServer;
 
 /**
  * 认证方式
@@ -22,7 +24,12 @@ public class AUTH extends AbstractFtpCommand{
 	protected void executCommand(IFtpSession ftpSession) throws FtpCommandException {
 		String authType = commandParameter[0];
 		if(StringUtils.isNotBlank(authType)){
-			
+			DefaultFtpContext ftpContext = (DefaultFtpContext)ftpSession.getFtpContext();
+			AbstractFtpServer abstarFtpserver = (AbstractFtpServer)ftpContext.getFtpServer();
+			String safeMode = abstarFtpserver.getMode();
+			if(!safeMode.equals(authType)){
+				throw new FtpCommandException("202");
+			}
 		}
 	}
 }
