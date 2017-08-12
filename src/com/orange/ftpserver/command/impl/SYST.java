@@ -8,6 +8,11 @@ import com.orange.ftpserver.context.DefaultFtpResponse;
 import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 
+/**
+ * 获取ftp server 操作系统相关的信息
+ * @author Administrator
+ *
+ */
 public class SYST extends AbstractFtpCommand{
 	public SYST(IFtpSession ftpSession, String[] parameters) {
 		super(ftpSession, FtpRequestCommand.SYST, parameters);
