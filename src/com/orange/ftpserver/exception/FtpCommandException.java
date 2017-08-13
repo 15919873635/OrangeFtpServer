@@ -3,7 +3,7 @@ package com.orange.ftpserver.exception;
 public final class FtpCommandException extends Exception implements IFtpException{
 
 	/**
-	 * 
+	 * FTP √¸¡Ó“Ï≥£
 	 */
 	private static final long serialVersionUID = 2315230829549506450L;
 	
