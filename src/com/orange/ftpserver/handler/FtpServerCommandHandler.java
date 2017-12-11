@@ -18,14 +18,14 @@ import com.orange.ftpserver.exception.FtpCommandException;
 import com.orange.ftpserver.obj.FtpTransferRequestObject;
 import com.orange.ftpserver.obj.FtpTransferResponseObject;
 
-public final class FtpServerHandler extends SimpleChannelHandler{
+public final class FtpServerCommandHandler extends SimpleChannelHandler{
 	private IFtpSession session;
 	
 	private IFtpContext ftpContext;
 
 	private FtpRequestCommandParser commandDecoder = FtpRequestCommandParser.defaultParser();
 	
-	public FtpServerHandler(IFtpContext ftpContext){
+	public FtpServerCommandHandler(IFtpContext ftpContext){
 		this.ftpContext = ftpContext;
 	}
 	
