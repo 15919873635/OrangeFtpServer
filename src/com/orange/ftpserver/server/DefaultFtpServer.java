@@ -18,9 +18,4 @@ public final class DefaultFtpServer extends AbstractFtpServer{
 	protected void addSSL(ChannelPipeline pipeline) {
 		
 	}
-
-	@Override
-	public void startClientPort(int clientPort) {
-		super.initClientPipeline(clientPort);
-	}
 }

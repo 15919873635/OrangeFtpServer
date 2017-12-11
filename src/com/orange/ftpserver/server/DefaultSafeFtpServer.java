@@ -53,9 +53,4 @@ public final class DefaultSafeFtpServer extends AbstractFtpServer{
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public void startClientPort(int clientPort) {
-		super.initClientPipeline(clientPort);
-	}
 }

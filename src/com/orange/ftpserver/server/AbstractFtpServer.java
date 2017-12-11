@@ -7,7 +7,7 @@ import java.util.concurrent.Executors;
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.bootstrap.ServerBootstrap;
 import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelFactory;
+import org.jboss.netty.channel.ChannelFuture;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.channel.Channels;
@@ -24,15 +24,13 @@ import com.orange.ftpserver.handler.FtpServerDataHandler;
 
 public abstract class AbstractFtpServer implements IFtpServer{
 	
-	protected ExecutorService bossGroup;
-	protected ExecutorService workerGroup;
-	protected ServerBootstrap serverBootstrap;
-	protected ClientBootstrap clientBootstrap;
-	protected ChannelGroup serverChannelGroup;
-	protected ChannelGroup clientChannelGroup;
-	protected ChannelFactory serverChannelFactory;
-	protected ChannelFactory clientChannelFactory;
-	protected int serverPort;
+	private ExecutorService bossGroup;
+	private ExecutorService workerGroup;
+	private ServerBootstrap serverBootstrap;
+	private ClientBootstrap clientBootstrap;
+	private ChannelGroup serverChannelGroup;
+	private ChannelGroup clientChannelGroup;
+	private int serverPort;
 	protected String safeMode = "";
 	private IFtpContext ftpContext;
 	
@@ -56,14 +54,19 @@ public abstract class AbstractFtpServer implements IFtpServer{
 	public void start() {
 		bossGroup = Executors.newCachedThreadPool();  
 		workerGroup = Executors.newCachedThreadPool(); 
-		initServerPipeline(serverPort);
+		startServerPort(serverPort);
 	}
-
+	
+	public void startServerPort(int serverPort){
+		initServerPipeline(serverPort);
+		Channel serverChannel = serverBootstrap.bind(new InetSocketAddress(serverPort)); 
+        serverChannelGroup.add(serverChannel);
+	}
+	
 	protected void initServerPipeline(int serverPort){
 		if(serverBootstrap == null){
 			serverBootstrap = new ServerBootstrap(); 
-			serverChannelFactory = new NioServerSocketChannelFactory(bossGroup, workerGroup);
-			serverBootstrap.setFactory(serverChannelFactory);  
+			serverBootstrap.setFactory(new NioServerSocketChannelFactory(bossGroup, workerGroup));  
 	        // 设置管道的工厂  
 			serverBootstrap.setPipelineFactory(new ChannelPipelineFactory() {  
 	            @Override  
@@ -78,8 +81,14 @@ public abstract class AbstractFtpServer implements IFtpServer{
 	        });
 	        addSSL(serverBootstrap.getPipeline());
 		}
-        Channel serverChannel = serverBootstrap.bind(new InetSocketAddress(serverPort)); 
-        serverChannelGroup.add(serverChannel);
+	}
+	
+	@Override
+	public void startClientPort(int clientPort) {
+		initClientPipeline(clientPort);
+		clientBootstrap.bind(new InetSocketAddress(clientPort));
+		ChannelFuture channelFuture = clientBootstrap.connect(new InetSocketAddress(clientPort));
+		clientChannelGroup.add(channelFuture.getChannel());
 	}
 	
 	protected void initClientPipeline(int clientPort){
@@ -99,8 +108,6 @@ public abstract class AbstractFtpServer implements IFtpServer{
 			});
 			addSSL(clientBootstrap.getPipeline());
 		}
-		clientBootstrap.bind(new InetSocketAddress(clientPort));
-		clientBootstrap.connect(new InetSocketAddress(clientPort));
 	}
 	
 	@Override
