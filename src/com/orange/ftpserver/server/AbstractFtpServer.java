@@ -19,8 +19,8 @@ import org.jboss.netty.handler.codec.string.StringDecoder;
 import org.jboss.netty.handler.codec.string.StringEncoder;
 
 import com.orange.ftpserver.context.IFtpContext;
-import com.orange.ftpserver.handler.FtpServerCommandHandler;
-import com.orange.ftpserver.handler.FtpServerDataHandler;
+import com.orange.ftpserver.handler.FtpCommandHandler;
+import com.orange.ftpserver.handler.FtpDataHandler;
 
 public abstract class AbstractFtpServer implements IFtpServer{
 	
@@ -60,7 +60,8 @@ public abstract class AbstractFtpServer implements IFtpServer{
 	public void startServerPort(int serverPort){
 		initServerPipeline(serverPort);
 		Channel serverChannel = serverBootstrap.bind(new InetSocketAddress(serverPort)); 
-        serverChannelGroup.add(serverChannel);
+		serverChannel.getPipeline().addLast("ftpServerCommandHandler", new FtpCommandHandler(ftpContext));
+		serverChannelGroup.add(serverChannel);
 	}
 	
 	protected void initServerPipeline(int serverPort){
@@ -75,7 +76,6 @@ public abstract class AbstractFtpServer implements IFtpServer{
 	                pipeline.addLast("lineBasedFrameDecoder", new LineBasedFrameDecoder(1024));
 	                pipeline.addLast("stringDecoder", new StringDecoder());
 	                pipeline.addLast("stringEncoder", new StringEncoder());
-	                pipeline.addLast("ftpServerCommandHandler", new FtpServerCommandHandler(ftpContext));  
 	                return pipeline;  
 	            }  
 	        });
@@ -88,6 +88,7 @@ public abstract class AbstractFtpServer implements IFtpServer{
 		initClientPipeline(clientPort);
 		clientBootstrap.bind(new InetSocketAddress(clientPort));
 		ChannelFuture channelFuture = clientBootstrap.connect(new InetSocketAddress(clientPort));
+		channelFuture.getChannel().getPipeline().addLast("ftpServerDataHandler", new FtpDataHandler(ftpContext)); 
 		clientChannelGroup.add(channelFuture.getChannel());
 	}
 	
@@ -102,7 +103,6 @@ public abstract class AbstractFtpServer implements IFtpServer{
 	                pipeline.addLast("lineBasedFrameDecoder", new LineBasedFrameDecoder(1024));
 	                pipeline.addLast("stringDecoder", new StringDecoder());
 	                pipeline.addLast("stringEncoder", new StringEncoder());
-	                pipeline.addLast("ftpServerDataHandler", new FtpServerDataHandler(ftpContext));  
 	                return pipeline;  
 				}
 			});

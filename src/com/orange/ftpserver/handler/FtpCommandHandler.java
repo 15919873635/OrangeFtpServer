@@ -3,6 +3,7 @@ package com.orange.ftpserver.handler;
 import org.apache.commons.lang.StringUtils;
 import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelHandlerContext;
+import org.jboss.netty.channel.ChannelStateEvent;
 import org.jboss.netty.channel.ExceptionEvent;
 import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
@@ -17,16 +18,32 @@ import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
 import com.orange.ftpserver.obj.FtpTransferRequestObject;
 import com.orange.ftpserver.obj.FtpTransferResponseObject;
+import com.orange.ftpserver.server.DefaultFtpServer;
+import com.orange.ftpserver.server.DefaultSafeFtpServer;
+import com.orange.ftpserver.server.IFtpServer;
 
-public final class FtpServerDataHandler extends SimpleChannelHandler{
+public final class FtpCommandHandler extends SimpleChannelHandler{
 	private IFtpSession session;
 	
 	private IFtpContext ftpContext;
 
 	private FtpRequestCommandParser commandDecoder = FtpRequestCommandParser.defaultParser();
 	
-	public FtpServerDataHandler(IFtpContext ftpContext){
+	public FtpCommandHandler(IFtpContext ftpContext){
 		this.ftpContext = ftpContext;
+	}
+	
+	@Override
+	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e)
+			throws Exception {
+		IFtpServer ftpServer = ftpContext.getFtpServer();
+		if(ftpServer.getSafeMode().equals("")){
+			DefaultFtpServer defaultFtpServer = (DefaultFtpServer)ftpServer;
+			defaultFtpServer.getServerGroup().add(ctx.getChannel());
+		} else{
+			DefaultSafeFtpServer defaultSafeFtpServer = (DefaultSafeFtpServer)ftpServer;
+			defaultSafeFtpServer.getServerGroup().add(ctx.getChannel());
+		}
 	}
 	
 	@Override
