@@ -26,7 +26,7 @@ public class AUTH extends AbstractFtpCommand{
 		if(StringUtils.isNotBlank(authType)){
 			DefaultFtpContext ftpContext = (DefaultFtpContext)ftpSession.getFtpContext();
 			AbstractFtpServer abstarFtpserver = (AbstractFtpServer)ftpContext.getFtpServer();
-			String safeMode = abstarFtpserver.getMode();
+			String safeMode = abstarFtpserver.getSafeMode();
 			if(!safeMode.equals(authType)){
 				throw new FtpCommandException("202");
 			}

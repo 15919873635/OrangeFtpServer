@@ -6,6 +6,7 @@ import com.orange.ftpserver.consts.ServerConstant;
 import com.orange.ftpserver.context.DefaultFtpStaticData;
 import com.orange.ftpserver.context.IFtpSession;
 import com.orange.ftpserver.exception.FtpCommandException;
+import com.orange.ftpserver.server.IFtpServer;
 
 /**
  * 该命令告诉FTP服务器，客户端监听的端口号是address，让FTP服务器采用主动模式
@@ -23,8 +24,10 @@ public class PORT extends AbstractFtpCommand{
 		String address = commandParameter[0];
 		String[] addSplit = address.split(":");
 		DefaultFtpStaticData ftpStatisticData = (DefaultFtpStaticData)ftpSession.getFtpStaticData();
-		ftpStatisticData.setMode(ServerConstant.MODE_PASV);
+		ftpStatisticData.setMode(ServerConstant.MODE_PORT);
 		ftpStatisticData.setHost(addSplit[0]);
 		ftpStatisticData.setPort(Integer.parseInt(addSplit[1]));
+		IFtpServer iFtpServer = super.getSession().getFtpContext().getFtpServer();
+		iFtpServer.startClientPort(ftpStatisticData.getPort());
 	}
 }

@@ -6,6 +6,7 @@ import java.util.concurrent.Executors;
 
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.bootstrap.ServerBootstrap;
+import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.channel.Channels;
@@ -23,6 +24,8 @@ public abstract class AbstractFtpServer implements IFtpServer{
 	protected ExecutorService workerGroup;
 	protected ServerBootstrap serverBootstrap;
 	protected ClientBootstrap clientBootstrap;
+	protected ChannelFactory serverChannelFactory;
+	protected ChannelFactory clientChannelFactory;
 	protected int serverPort;
 	protected String safeMode = "";
 	private IFtpContext ftpContext;
@@ -43,41 +46,53 @@ public abstract class AbstractFtpServer implements IFtpServer{
 		this.safeMode = safeMode;
 	}
 	protected abstract void addSSL(ChannelPipeline pipeline);
-	
 	@Override
 	public void start() {
 		bossGroup = Executors.newCachedThreadPool();  
 		workerGroup = Executors.newCachedThreadPool(); 
-		serverBootstrap = new ServerBootstrap(); 
-		clientBootstrap = new ClientBootstrap();
-		clientBootstrap.setFactory(new NioClientSocketChannelFactory(bossGroup, workerGroup));
-		serverBootstrap.setFactory(new NioServerSocketChannelFactory(bossGroup, workerGroup));  
-        // 设置管道的工厂  
-		serverBootstrap.setPipelineFactory(new ChannelPipelineFactory() {  
-            @Override  
-            public ChannelPipeline getPipeline() throws Exception {  
-                ChannelPipeline pipeline = Channels.pipeline();  
-                pipeline.addLast("stringDecoder", new StringDecoder());
-                pipeline.addLast("stringEncoder", new StringEncoder());
-                pipeline.addLast("ftpServerCommandHandler", new FtpServerCommandHandler(ftpContext));  
-                return pipeline;  
-            }  
-        });
-		clientBootstrap.setPipelineFactory(new ChannelPipelineFactory() {
-			@Override
-			public ChannelPipeline getPipeline() throws Exception {
-				ChannelPipeline pipeline = Channels.pipeline();  
-                pipeline.addLast("stringDecoder", new StringDecoder());
-                pipeline.addLast("stringEncoder", new StringEncoder());
-                pipeline.addLast("ftpServerHandler", new FtpServerCommandHandler(ftpContext));  
-                return pipeline;  
-			}
-		});
-        addSSL(serverBootstrap.getPipeline());
-        serverBootstrap.bind(new InetSocketAddress(serverPort));  
-        clientBootstrap.bind(new InetSocketAddress(20));
+		initServerPipeline(serverPort);
 	}
 
+	protected void initServerPipeline(int serverPort){
+		if(serverBootstrap == null){
+			serverBootstrap = new ServerBootstrap(); 
+			serverChannelFactory = new NioServerSocketChannelFactory(bossGroup, workerGroup);
+			serverBootstrap.setFactory(serverChannelFactory);  
+	        // 设置管道的工厂  
+			serverBootstrap.setPipelineFactory(new ChannelPipelineFactory() {  
+	            @Override  
+	            public ChannelPipeline getPipeline() throws Exception {  
+	                ChannelPipeline pipeline = Channels.pipeline();  
+	                pipeline.addLast("stringDecoder", new StringDecoder());
+	                pipeline.addLast("stringEncoder", new StringEncoder());
+	                pipeline.addLast("ftpServerCommandHandler", new FtpServerCommandHandler(ftpContext));  
+	                return pipeline;  
+	            }  
+	        });
+	        addSSL(serverBootstrap.getPipeline());
+		}
+        serverBootstrap.bind(new InetSocketAddress(serverPort)); 
+	}
+	
+	protected void initClientPipeline(int clientPort){
+		if(clientBootstrap == null){
+			clientBootstrap = new ClientBootstrap();
+			clientBootstrap.setFactory(new NioClientSocketChannelFactory(bossGroup, workerGroup));
+			clientBootstrap.setPipelineFactory(new ChannelPipelineFactory() {
+				@Override
+				public ChannelPipeline getPipeline() throws Exception {
+					ChannelPipeline pipeline = Channels.pipeline();  
+	                pipeline.addLast("stringDecoder", new StringDecoder());
+	                pipeline.addLast("stringEncoder", new StringEncoder());
+	                pipeline.addLast("ftpServerHandler", new FtpServerCommandHandler(ftpContext));  
+	                return pipeline;  
+				}
+			});
+			addSSL(clientBootstrap.getPipeline());
+		}
+		clientBootstrap.bind(new InetSocketAddress(clientPort));
+	}
+	
 	@Override
 	public void close() {
 		if(workerGroup != null)
@@ -99,7 +114,7 @@ public abstract class AbstractFtpServer implements IFtpServer{
 		this.safeMode = safeMode;
 	}
 	
-	public String getMode(){
+	public String getSafeMode(){
 		return this.safeMode;
 	}
 }

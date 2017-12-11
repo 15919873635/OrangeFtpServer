@@ -4,5 +4,6 @@ public interface IFtpServer {
 	public void start();
 	public void close();
 	public int getServerPort();
-	public String getMode();
+	public String getSafeMode();
+	public void startClientPort(int clientPort);
 }
