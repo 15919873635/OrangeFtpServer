@@ -17,6 +17,7 @@ import org.jboss.netty.handler.codec.string.StringEncoder;
 
 import com.orange.ftpserver.context.IFtpContext;
 import com.orange.ftpserver.handler.FtpServerCommandHandler;
+import com.orange.ftpserver.handler.FtpServerDataHandler;
 
 public abstract class AbstractFtpServer implements IFtpServer{
 	
@@ -84,7 +85,7 @@ public abstract class AbstractFtpServer implements IFtpServer{
 					ChannelPipeline pipeline = Channels.pipeline();  
 	                pipeline.addLast("stringDecoder", new StringDecoder());
 	                pipeline.addLast("stringEncoder", new StringEncoder());
-	                pipeline.addLast("ftpServerHandler", new FtpServerCommandHandler(ftpContext));  
+	                pipeline.addLast("ftpServerDataHandler", new FtpServerDataHandler(ftpContext));  
 	                return pipeline;  
 				}
 			});
