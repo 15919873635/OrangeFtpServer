@@ -6,10 +6,12 @@ import java.util.concurrent.Executors;
 
 import org.jboss.netty.bootstrap.ClientBootstrap;
 import org.jboss.netty.bootstrap.ServerBootstrap;
+import org.jboss.netty.channel.Channel;
 import org.jboss.netty.channel.ChannelFactory;
 import org.jboss.netty.channel.ChannelPipeline;
 import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.channel.Channels;
+import org.jboss.netty.channel.group.ChannelGroup;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
 import org.jboss.netty.handler.codec.frame.LineBasedFrameDecoder;
@@ -26,6 +28,8 @@ public abstract class AbstractFtpServer implements IFtpServer{
 	protected ExecutorService workerGroup;
 	protected ServerBootstrap serverBootstrap;
 	protected ClientBootstrap clientBootstrap;
+	protected ChannelGroup serverChannelGroup;
+	protected ChannelGroup clientChannelGroup;
 	protected ChannelFactory serverChannelFactory;
 	protected ChannelFactory clientChannelFactory;
 	protected int serverPort;
@@ -74,7 +78,8 @@ public abstract class AbstractFtpServer implements IFtpServer{
 	        });
 	        addSSL(serverBootstrap.getPipeline());
 		}
-        serverBootstrap.bind(new InetSocketAddress(serverPort)); 
+        Channel serverChannel = serverBootstrap.bind(new InetSocketAddress(serverPort)); 
+        serverChannelGroup.add(serverChannel);
 	}
 	
 	protected void initClientPipeline(int clientPort){
@@ -95,14 +100,19 @@ public abstract class AbstractFtpServer implements IFtpServer{
 			addSSL(clientBootstrap.getPipeline());
 		}
 		clientBootstrap.bind(new InetSocketAddress(clientPort));
+		clientBootstrap.connect(new InetSocketAddress(clientPort));
 	}
 	
 	@Override
 	public void close() {
-		if(workerGroup != null)
-			workerGroup.shutdownNow();
-		if(bossGroup != null)
-			bossGroup.shutdownNow();
+		if(serverBootstrap != null && serverChannelGroup != null){
+			serverChannelGroup.close().awaitUninterruptibly();
+			serverBootstrap.releaseExternalResources();
+		}
+		if(clientBootstrap != null && clientChannelGroup != null){
+			clientChannelGroup.close().awaitUninterruptibly();
+			clientBootstrap.releaseExternalResources();
+		} 
 	}
 	
 	public void setServerPort(int serverPort){
@@ -120,5 +130,13 @@ public abstract class AbstractFtpServer implements IFtpServer{
 	
 	public String getSafeMode(){
 		return this.safeMode;
+	}
+	
+	public ChannelGroup getServerGroup(){
+		return this.serverChannelGroup;
+	}
+	
+	public ChannelGroup getClientGroup(){
+		return this.clientChannelGroup;
 	}
 }
