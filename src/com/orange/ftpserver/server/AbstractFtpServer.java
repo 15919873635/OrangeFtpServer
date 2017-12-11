@@ -12,6 +12,7 @@ import org.jboss.netty.channel.ChannelPipelineFactory;
 import org.jboss.netty.channel.Channels;
 import org.jboss.netty.channel.socket.nio.NioClientSocketChannelFactory;
 import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
+import org.jboss.netty.handler.codec.frame.LineBasedFrameDecoder;
 import org.jboss.netty.handler.codec.string.StringDecoder;
 import org.jboss.netty.handler.codec.string.StringEncoder;
 
@@ -63,7 +64,8 @@ public abstract class AbstractFtpServer implements IFtpServer{
 			serverBootstrap.setPipelineFactory(new ChannelPipelineFactory() {  
 	            @Override  
 	            public ChannelPipeline getPipeline() throws Exception {  
-	                ChannelPipeline pipeline = Channels.pipeline();  
+	                ChannelPipeline pipeline = Channels.pipeline(); 
+	                pipeline.addLast("lineBasedFrameDecoder", new LineBasedFrameDecoder(1024));
 	                pipeline.addLast("stringDecoder", new StringDecoder());
 	                pipeline.addLast("stringEncoder", new StringEncoder());
 	                pipeline.addLast("ftpServerCommandHandler", new FtpServerCommandHandler(ftpContext));  
@@ -83,6 +85,7 @@ public abstract class AbstractFtpServer implements IFtpServer{
 				@Override
 				public ChannelPipeline getPipeline() throws Exception {
 					ChannelPipeline pipeline = Channels.pipeline();  
+	                pipeline.addLast("lineBasedFrameDecoder", new LineBasedFrameDecoder(1024));
 	                pipeline.addLast("stringDecoder", new StringDecoder());
 	                pipeline.addLast("stringEncoder", new StringEncoder());
 	                pipeline.addLast("ftpServerDataHandler", new FtpServerDataHandler(ftpContext));  
